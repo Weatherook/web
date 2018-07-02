@@ -61,9 +61,7 @@
 
         </v-layout>
 
-
-
-
+        <!-- public계정의 피드들 -->
         <v-layout>
             
         </v-layout>
