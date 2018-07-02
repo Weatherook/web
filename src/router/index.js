@@ -7,6 +7,6 @@ import MypageRoutes from './mypage'
 Vue.use(Router)
 
 export default new Router({
-  routes: [HomeRoutes],
+  routes: [HomeRoutes, MypageRoutes],
   mode: 'history'
 })
