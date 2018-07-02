@@ -23,7 +23,7 @@
     </v-toolbar>
    <router-view/>
   </v-app>
- 
+
 </template>
 
 <script>
