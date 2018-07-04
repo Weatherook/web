@@ -2,22 +2,30 @@
   <v-app>
     <nav>
       <div class="nav" align="center">
-        <!-- 로고 -->
-        <img src="./assets/logo.png" id="logo" width="50px" height="50px"/>
-        <!-- 검색창 -->
-        <div class="searchBox">
-          <div class="container-1">
-              <input type="search" id="search" placeholder=" " />
-              <span class="icon"><i class="fa fa-search"></i></span>
+
+        <div id="leftNav">
+          <!-- 로고 -->
+          <img src="./assets/logo.png" id="logo" width="50px" height="50px"/>
+          <!-- 검색창 -->
+          <div class="searchBox">
+            <div class="container-1">
+               <input type="search" id="search" placeholder=" " />
+                <span class="icon"><i class="fa fa-search"></i></span>
+            </div>
           </div>
         </div>
+        
+
 
         <!-- 날씨 -->
-        <img src="./assets/weather_sunny.png" id="weatherIcon" width="50px" height="50px" />
-        <h2 id="weather">맑음</h2>
-        <h2 id="temp">28</h2>
-        <img src="./assets/heart.png" id="heart" width="50px" height="50px" />
-        <img src="./assets/mypage.png" id="mypage" width="50px" height="50px" />
+        <div id="rightNav">
+          <img src="./assets/weather_sunny.png" id="weatherIcon" width="40px" height="40px" />
+          <h2 id="weather">맑음</h2>
+          <img src="./assets/topline.png" id="topLine" height="30px" />
+          <h2 id="temp">28</h2>
+          <img src="./assets/heart.png" id="heart" width="30px" height="30px" />
+          <img src="./assets/mypage.png" id="mypage" width="40px" height="40px" />
+        </div>
       </div>
     </nav>
 
@@ -54,38 +62,60 @@ nav {
    margin-bottom: 1.5%;
 }
 
+#rightNav{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  float: right;
+  margin: 0%;
+}
+
+#leftNav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+}
+
 #logo{
     display: inline;
-    float: left;
-    margin-left: 10%
+    margin-left: 10%;
 }
 
 .searchBox {
   display: inline;
-  float: left;
-  align-items: center;
-  margin-top: 1%;
-  margin-left: 2%;
-  width: 25%; 
-  border: 0.3px solid #741DFF;
+  align-items: left;
+  width: 100%;
+  border: 1px solid #741DFF;
+  border-radius: 25px;
 }
 
+/* input form */
 #search{
   color: #741DFF;
-  align-items: center;
+  width: 70%;
+  height: 100%;
+  vertical-align: middle;
 }
 
 .icon{
   color: #741DFF;
   padding: 2.5%;
-  border: 1px solid #741DFF;
   float: right;
 }
 
-#weatherIcon, #weather, #temp, #heart, #mypage{
-    display: inline;
-    float: right;
+#weather, #topLine, #temp, #heart, #mypage{
+    /* margin-left: 10%; */
 }
+
+#weather, #temp{
+  color: #cbcbcb;
+  font-size: 120%;
+}
+
+/* #weather, #temp{
+  vertical-align: middle;
+}  */
 
 
 
