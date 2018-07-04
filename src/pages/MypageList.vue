@@ -17,7 +17,7 @@
         </v-flex>
 
         <v-flex row xs6 sm4 md4 pa-0>
-          <!-- date, weather, temperature -->
+          <!-- date, weather, temperature!! -->
           <span class="purple-text">7월 25일</span>
           <span class="purple-text">맑음</span>
           <span class="purple-text">25/31</span>
