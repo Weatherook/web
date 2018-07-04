@@ -16,7 +16,7 @@
           <img src="../assets/zezudo.jpg" alt="" class="feed-image">
         </v-flex>
 
-        <v-flex row xs6 sm4 md4 pa-0>
+        <v-flex row xs12 sm6 md6 pa-0 ml-1>
           <!-- date, weather, temperature!! -->
           <span class="purple-text">7월 25일</span>
           <span class="purple-text">맑음</span>
@@ -24,12 +24,12 @@
         </v-flex>
 
         <v-layout row wrap>
-          <v-flex column xs12 sm12 md12 fluid>
+          <v-flex column xs12 sm12 md12 fluid ml-1>
             <div class="feed-content">여기느 설명설명 설명부분</div>
             <div class="hashtag">#해쉬태그 #해시태그</div>
           </v-flex>
 
-          <v-flex xs12 sm12 md12 fluid>
+          <v-flex xs12 sm12 md12 fluid ml-1>
             <span class="comment-all">댓글 2개 모두보기</span>
             <!-- for loop || 2개만? -->
             <div class="comment-container">
@@ -37,7 +37,7 @@
               <span class="comment-content">배아파바배아파아배아파</span>
             </div>
 
-            <v-flex row wrap xs12 sm12 md12>
+            <v-flex row wrap xs12 sm12 md12 pa-0>
                 <img src="../assets/zezudo.jpg" alt="" class="user_image">
                 <span class="input-comment">댓글...</span>
             </v-flex>
@@ -64,7 +64,7 @@ export default {
 
 .user_image {
   width: 40px;
-  height: auto;
+  height: 40px;
   border-radius: 40px;
   margin-right: 7px;
 }
@@ -87,6 +87,7 @@ export default {
 .purple-text {
   color: purple;
   font-weight: bold;
+  padding-right: 5px;
 }
 
 .feed-container {
