@@ -1,5 +1,10 @@
 <template>
-    <h2>HI</h2>
+    <v-app>
+        <v-container id="followingFeed" fluid>
+            <h2>HI</h2>
+        </v-container>
+
+    </v-app>
 </template>
 
 
@@ -13,5 +18,9 @@ export default {
 
 <style scoped>
 
+#followingFeed{
+    background-color: #FFFFFF;
+    padding: 0%;
+}
 
 </style>

@@ -1,7 +1,11 @@
 <template>
+    <v-app>
+        <v-container id="todayFeed" fluid>
+            <h2>HELLO</h2>
 
-    <h2>HELLO</h2>
+        </v-container>
 
+    </v-app>
 </template>
 
 
@@ -14,6 +18,11 @@ export default {
 </script>
 
 <style scoped>
+
+#todayFeed{
+    background-color: #FFFFFF;
+    padding: 0%;  
+}
 
 
 </style>
