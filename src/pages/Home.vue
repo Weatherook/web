@@ -5,7 +5,7 @@
         <!-- 오늘의 추천 코디 상단 탭 -->
         <v-layout row wrap id="todayLookTab">
             <v-flex>
-                
+
                 <h2>오늘의 추천 코디</h2>
                 <v-content id="codiCon" flat="true">
                     <v-carousel hide-delimiters light prev-icon="chevron_left" next-icon="chevron_right" transition=fade :cycle=cycle flat="true">
@@ -33,6 +33,7 @@
     <v-container grid-list-md text-xs-center id="todayFeedCon" fluid>
         <!-- public계정의 피드들 -->
         <v-layout id="feedTab" fluid flat="true">
+
             <v-toolbar id="feedTabToolBar" flat="true" pa-0>
                 
                 <v-container id="feedTabBar" fluid>
