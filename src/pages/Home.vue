@@ -1,25 +1,29 @@
 <template>
 <v-app>
-    <v-container grid-list-md text-xs-center id="todayLookCon" fluid>
+    <v-container grid-list-md text-xs-center id="todayLookCon" fluid >
 
         <!-- 오늘의 추천 코디 상단 탭 -->
         <v-layout row wrap id="todayLookTab">
-            <v-flex>
+            <v-flex wrap>
 
                 <h2>오늘의 추천 코디</h2>
-                <v-content id="codiCon" flat="true">
-                    <v-carousel hide-delimiters light prev-icon="chevron_left" next-icon="chevron_right" transition=fade :cycle=cycle flat="true">
+                <v-content id="todayLookContent" flat="true" wrap>
+                    <v-carousel hide-delimiters light prev-icon="chevron_left" next-icon="chevron_right" transition=fade :cycle=cycle flat="true" pa-0 wrap>
                         <v-carousel-item v-for="(page,index) in cardPages" :key="index" flat="true">
-                            <v-container fluid fill-height grid-list-sm flat="true">
-                                <v-layout mt-2 row justify-center align-center flat="true">
-                                    <v-flex xs3 v-for="(card,i) in page" :key="i" flat="true">
+
+                            <v-container fluid fill-height grid-list-sm flat="true" pa-0 ma-0>
+                                <v-layout mt-2 row justify-center align-center flat="true" ma-0>
+
+                                    <v-flex xs3 v-for="(card,index) in page" :key="index" flat="true">
                                         <v-card flat="true">
                                             <v-card-media :src=card.src height="300px">
                                             </v-card-media>
                                         </v-card>
                                     </v-flex>
+                                    
                                 </v-layout>
                             </v-container>
+
                         </v-carousel-item>
                     </v-carousel>
                 </v-content>
@@ -30,15 +34,14 @@
 
     <v-spacer></v-spacer>
     
-    <v-container grid-list-md text-xs-center id="todayFeedCon" fluid>
+    <v-container grid-list-md text-xs-center id="todayFeedCon" fluid pa-0>
         <!-- public계정의 피드들 -->
-        <v-layout id="feedTab" fluid flat="true">
-
-            <v-toolbar id="feedTabToolBar" flat="true" pa-0>
-                
-                <v-container id="feedTabBar" fluid>
+        <v-layout id="feedTab" fluid flat="true" pa-0>
+            <v-flex px-0 >
+            <v-toolbar id="feedTabToolBar" flat="true">
+                <v-container id="feedTabBar" fluid text-xs-center>
                     <!-- 여기 slider-color 어떻게 rgb값으로 바꾸는지 모르겠 -->
-                    <v-tabs id="feedTabItem" color="transparent" slider-color="deep-purple">
+                    <v-tabs id="feedTabItem" color="transparent" slider-color="deep-purple" centered>
                         <v-tab v-for="content in tabContents" :key="content" style="color:#7000ff" router :to="content.link">
                             {{content.title}}
                         </v-tab>
@@ -49,6 +52,7 @@
                 </v-container>
                 
             </v-toolbar>
+            </v-flex>
         </v-layout>
     </v-container>
 </v-app>
@@ -70,42 +74,27 @@ export default {
       cycle: false,
       cards: [
         {
-          src:  'http://efdreams.com/data_images/dreams/dog/dog-12.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
+          src: 'https://st2.depositphotos.com/5723466/8465/i/950/depositphotos_84652408-stock-photo-3d-red-number-1.jpg',
         },
         {
-          src: 'https://vuetifyjs.com/static/doc-images/cards/desert.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...'
+          src: 'https://st3.depositphotos.com/1561359/12975/i/950/depositphotos_129757262-stock-photo-3d-red-number-2.jpg',
         },
         {
-          src: 'https://vuetifyjs.com/static/doc-images/cards/desert.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...'
+          src: 'https://static4.depositphotos.com/1011728/281/i/950/depositphotos_2810742-stock-photo-3d-render-of-red-number.jpg',
         },
         {
-          src: 'https://vuetifyjs.com/static/doc-images/cards/desert.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...'
+          src: 'https://st.depositphotos.com/1561359/3755/v/950/depositphotos_37559667-stock-illustration-3d-shiny-red-number-4.jpg',
         },
-        {
-          src: 'https://vuetifyjs.com/static/doc-images/cards/desert.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...'
-        },
-        {
-          src: 'https://vuetifyjs.com/static/doc-images/cards/desert.jpg',
-          title: 'Kangaroo Valley Safari',
-          text: 'Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...'
-        },
+         {
+          src: 'https://st.depositphotos.com/1561359/4118/v/950/depositphotos_41184901-stock-illustration-3d-shiny-red-number-5.jpg',
+        }
       ]
     }
     },
     computed : {
         cardPages (){
           // xl = 12, lg = 6, md = 4, sm = 3, xl = 2
-          let pageSize = 3
+          let pageSize = 4
         //   if (this.$vuetify.breakpoint.xl) {
         //     pageSize = 4
         //   } else if (this.$vuetify.breakpoint.lg) {
@@ -117,12 +106,15 @@ export default {
         //   }
 
           const pages = []
-          for (let i = 0; i < this.cards.length; i += 1) {
-            pages.push(this.cards.slice(i, i + pageSize))
-            // if (pageSize < 3) {
-            //
-            // }
-          }
+          for (let i=0; i<10; i++) {
+	
+        	let a = [...this.cards.slice(i * pageSize %this.cards.length, i* pageSize %this.cards.length + pageSize)]
+	
+	        if (a.length != pageSize) {
+		        a = [...a, ...this.cards.slice(0, pageSize - a.length)]
+            }
+            pages.push(a)
+        }
           return pages
         }
       }
@@ -190,7 +182,8 @@ h2 {
 
 }
 
-#codiCon{
-    height: 30%;
+#todayLookContent{
+    overflow:hidden;
+    height:auto;    
 }
 </style>
