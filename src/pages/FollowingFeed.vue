@@ -1,9 +1,20 @@
 <template>
     <v-app>
-        <v-container id="followingFeed" fluid>
-            <h2>HI</h2>
-        </v-container>
+        <v-container grid-list-lg fluid>
+         <v-layout row btns>
 
+            <router-link to="/feed/following/grid">
+                <img src="../assets/photo1@2x.png" alt="" class="view-icon grid">
+            </router-link>
+
+            <router-link to="/feed/following/list">
+                <img src="../assets/photo2@2x.png" alt="" class="view-icon list">
+            </router-link>
+            
+        </v-layout>
+        <router-view/>
+
+       </v-container>
     </v-app>
 </template>
 

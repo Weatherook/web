@@ -16,7 +16,7 @@
 
                                     <v-flex xs3 v-for="(card,index) in page" :key="index" flat="true">
                                         <v-card flat="true">
-                                            <v-card-media :src=card.src height="300px">
+                                            <v-card-media :src=card.src height="300px" width="200px">
                                             </v-card-media>
                                         </v-card>
                                     </v-flex>
@@ -139,8 +139,8 @@ export default {
 
 #todayFeedCon{
     display: inline;
-    overflow:hidden;
-    height:auto;
+    /* overflow: hidden; */
+    height: 100%;
     margin: 0%;
     padding: 0%;
     background-color: #f7f7f7;

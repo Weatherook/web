@@ -37,10 +37,5 @@ export default {
 
 <style scoped>
 
-#todayFeed{
-    background-color: #FFFFFF;
-    padding: 0%;  
-}
-
 
 </style>
