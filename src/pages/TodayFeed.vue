@@ -1,10 +1,21 @@
 <template>
-    <v-app>
-        <v-container id="todayFeed" fluid>
-            <h2>HELLO</h2>
+     <v-app>
+        <v-container grid-list-lg fluid>
+         <v-layout row btns>
 
-        </v-container>
+            <router-link to="/feed/today/grid">
+                <img src="../assets/photo1@2x.png" alt="" class="view-icon grid">
+            </router-link>
 
+            <router-link to="/feed/today/list">
+                <img src="../assets/photo2@2x.png" alt="" class="view-icon list">
+            </router-link>
+            
+        </v-layout>
+        <router-view/>
+       
+
+    </v-container>
     </v-app>
 </template>
 
@@ -13,7 +24,14 @@
 import { mapGetters } from 'vuex'
 
 export default {
-   
+   data () {
+    return {
+      tabContents: [
+        { title: 'grid', link: '/feed/today/grid' },
+        { title: 'list', link: '/feed/today/list' }
+      ]
+    }
+  }
 }
 </script>
 
