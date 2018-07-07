@@ -19,7 +19,7 @@
 
         <!-- 날씨 -->
         <div id="rightNav">
-          <img src="./assets/weather_sunny.png" id="weatherIcon" width="40px" height="40px" />
+          <img src="./assets/sunny.png" id="weatherIcon" width="40px" height="40px" />
           <h2 id="weather">맑음</h2>
           <img src="./assets/topline.png" id="topLine" height="30px" />
           <h2 id="temp">28</h2>
