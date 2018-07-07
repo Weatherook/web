@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <nav>
+    <nav v-if="['Home', 'Mypage'].indexOf($route.name) > -1">
       <div class="nav" align="center">
 
         <div id="leftNav">

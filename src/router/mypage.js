@@ -9,10 +9,12 @@ export default {
   children: [
     {
       path: 'grid',
+      name: 'MypageGrid',
       component: MypageGrid
     },
     {
       path: 'list',
+      name: 'MypageList',
       component: MypageList
     }
   ]

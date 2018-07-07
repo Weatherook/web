@@ -5,10 +5,11 @@ import MypageRoutes from './mypage'
 import TodayFeedRoutes from './todayFeed'
 import FollowingFeedRoutes from './followingFeed'
 import SettingRoutes from './setting'
+import { SignRoutes } from './sign'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [HomeRoutes, MypageRoutes, TodayFeedRoutes, FollowingFeedRoutes, SettingRoutes],
+  routes: [HomeRoutes, MypageRoutes, TodayFeedRoutes, FollowingFeedRoutes, SignRoutes, SettingRoutes],
   mode: 'history'
 })
