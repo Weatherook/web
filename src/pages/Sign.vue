@@ -51,9 +51,11 @@
                           </v-flex>
 
                           <v-flex row wrap sex-info>
-                            <img src="../assets/join_woman_no@2x.png" alt="">
-                            
-                            <img src="../assets/join_man_no@2x.png" alt="">
+                            <img v-if="this.womanFlag === 0" src="../assets/join_woman_no@2x.png" v-on:click="click_woman" class="sex_woman">
+                            <img v-else src="../assets/join_woman_ok@2x.png" v-on:click="click_woman" class="sex_woman">
+
+                            <img v-if="this.manFlag === 0" src="../assets/join_man_no@2x.png" alt="" v-on:click="click_man" class="sex_man">
+                            <img v-else src="../assets/join_man_ok@2x.png" alt="" v-on:click="click_man" class="sex_man">
                           </v-flex>
 
                           <v-flex column offset-sm4 offset-md4 hw-info>
@@ -79,8 +81,8 @@
                           </v-flex>
 
                           <v-layout row wrap style-info>
-                                <v-flex row sm3 md3 lg3 style-btn v-for= "i in 10" :key="i">
-                                    엘레강스
+                                <v-flex row sm3 md3 lg3 style-btn v-for= "i in styleArray" :key="i" v-on:click="click_style" class="style-button">
+                                    {{ i }}
                                 </v-flex>
                           </v-layout>
 
@@ -101,12 +103,50 @@
 export default {
     data () {
         return {
-            signUpPageFlag : 0
+            signUpPageFlag : 0,
+            womanFlag : 0,
+            manFlag : 0,
+            styleArray : ["빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"],
+            styleFlagArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
     },
     methods: {
         signUpPage() {
             this.signUpPageFlag = 1;
+        },
+        click_woman() {
+           
+            if(this.womanFlag === 0){
+                this.womanFlag = 1;
+                this.manFlag = 0;
+
+            }else {
+                this.womanFlag = 0;
+            }
+        },
+        click_man() {
+            if(this.manFlag === 0) {
+                this.manFlag = 1;
+                this.womanFlag = 0;
+            }else {
+                this.manFlag = 0;
+            }
+        },
+        click_style(e) {
+            var clicked_btn = document.getElementsByClassName("style-button");
+        
+            if(this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] === 0) {
+                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 1;
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#741DFF";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#741DFF";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#FFFFFF";
+            }
+            else {
+                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 0;
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#FFFFFF";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#AAAAAA";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#AAAAAA";
+            }
         }
     }
 }
@@ -127,6 +167,7 @@ export default {
 
 .logo {
     width: 200px;
+    margin-left: 30px;
 }
 
 .login {
@@ -143,6 +184,7 @@ export default {
     border: 1px solid #741DFF;
     text-align: center;
     line-height: 40px;
+    cursor: pointer;
 }
 
 .purple-btn {
@@ -161,6 +203,10 @@ export default {
   margin-top: 40px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .user-additional-info {
     padding-top: 100px;
     text-align: center;
@@ -174,6 +220,10 @@ export default {
 
 .sex-info {
     margin : 20px 0;
+}
+
+.sex_man, .sex_woman {
+    cursor: pointer;
 }
 
 .hw-info {
@@ -194,10 +244,12 @@ export default {
   border-radius: 36px;
   font-family: Arial;
   color: #AAAAAA;
-  padding: 10px 20px 10px 20px;
+  height: 35px;
+  line-height: 35px;
   border: solid #AAAAAA 1px;
   text-decoration: none;
-  margin: 5px 8px;
+  margin: 5px 5px;
+  cursor: pointer;
 }
 
 .style-text {
