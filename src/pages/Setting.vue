@@ -59,21 +59,9 @@
                         </div>
                         
 
-                        <v-layout xs4>
-                            <v-flex>
-                                <button class="btn">빈티지</button>
-                                <button class="btn">스트릿</button>
-                                <button class="btn">클래식</button>
-
-                                <button class="btn">모던</button>
-                                <button class="btn">캐쥬얼</button>
-                                <button class="btn">유스</button>
-
-                                <button class="btn">엘레강스</button>
-                                <button class="btn">댄디</button>
-                                <button class="btn">로맨틱</button>
-
-                                <button class="btn">그 외</button>
+                        <v-layout row wrap text-xs-center>
+                            <v-flex row wrap xs3 sm3 md3 lg3 class="style-btn" v-for= "style in styleArray" :key="style" v-on:click="switchFlag" style="text-align:center;">
+                                    {{ style }}
                             </v-flex>
                            
 
@@ -91,6 +79,44 @@
 
 <script>
 export default {
+      data () {
+        return {
+            styleArray: [
+               "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"
+            ],
+            styleFlagArray: [
+                { title: "빈티지", flag: false },
+                { title: "스트릿", flag: true },
+                { title: "클래식", flag: false },
+                { title: "모던", flag: false },
+                { title: "캐쥬얼", flag: false },
+                { title: "유스", flag: false },
+                { title: "엘레강스", flag: false },
+                { title: "댄디", flag: false },
+                { title: "로맨틱", flag: false },
+                { title: "그 외", flag: false },
+            ]
+        }
+    },
+    methods: {
+        switchFlag(e) {
+            var clicked_btn = document.getElementsByClassName("style-btn");
+            console.log(this.styleArray.indexOf(e.toElement.innerText))
+        
+            if(this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)].flag === false) {
+                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)].flag = true;
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#aaaaaa";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#ffffff";
+            }
+            else {
+                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = false;
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#FFFFFF";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
+                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
+            }
+        }
+    }
 
 }
 </script>
@@ -145,25 +171,26 @@ export default {
     color: #741dff;
 }
 
-.btn {
+.style-btn {
   -webkit-border-radius: 36;
   -moz-border-radius: 36;
   border-radius: 36px;
-  width: 30%;
   font-family: Arial;
   color: #aaaaaa;
-  font-size: 17px;
   background: #ffffff;
   padding: 10px 20px 10px 20px;
   border: solid #aaaaaa 0.8px;
   margin-bottom: 1%;
   text-decoration: none;
+  height: 30px;
+  margin-right: 5%;
 }
+
 
 .middle{
     /* display: flex;
     align-items: center;
-    width:50%; */
+    width#ffffff/
     /* margin: 0%; */
 }
 </style>
