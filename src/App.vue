@@ -35,13 +35,6 @@
 
           <v-flex mt-1 ml-3>
             <img src="./assets/top-profileface@2x.png" class="profile_image">
-            <v-flex v-if="this.bell_flag" bell-content>
-              <ul>
-                <li>ㅎ</li>
-                <li>ㅅ</li>
-                <li>ㅂ</li>
-              </ul>
-            </v-flex>
           </v-flex>
 
         </v-layout>
@@ -80,10 +73,14 @@ export default {
   },
   methods: {
     click_bell() {
-      this.bell_flag = true;
       var bell_element = document.getElementsByClassName("bell_image")[0];
-      bell_element.src="../static/home/bell2@2x.png";
-
+      if(this.bell_flag == false) {
+        this.bell_flag = true;
+        bell_element.src="../static/home/bell2@2x.png";
+      } else {
+        this.bell_flag = false;
+        bell_element.src="../static/home/bell1@2x.png";
+      }
     }
   }
 }

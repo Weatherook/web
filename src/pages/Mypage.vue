@@ -2,9 +2,9 @@
     <v-app>
         <v-container grid-list-lg fluid>
         <v-layout column align-center>
-          <img src="../assets/zezudo.jpg" alt="" class="user_image">
-          <div class="user_id">lc.e_y</div>
-          <div class="user_status">은영이 웨더룩룩룩</div>
+          <img src="../assets/profileface@2x.png" alt="" class="user_image">
+          <v-flex class="user_id">lc.e_y</v-flex>
+          <v-flex>은영이 웨더룩룩룩</v-flex>
         </v-layout>
 
         <v-layout row num-width>
@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 * {
-    background-color : #EDEDED;
+    background-color : #F7F7F7;
     text-align: center;
 }
 .user_image {
@@ -70,7 +70,8 @@ export default {
 
 .num_text {
     font-weight: bold;
-    color : purple;
+    color : #741DFF;
+    font-size: 20px;
 }
 
 .num-width {
