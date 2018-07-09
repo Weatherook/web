@@ -28,7 +28,6 @@
         </div>
       </div>
     </nav>
-
     <router-view/>
   </v-app>
 
@@ -56,67 +55,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   
 }
-
-nav {
-   margin-top: 1.5%;
-   margin-bottom: 1.5%;
-}
-
-#rightNav{
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  float: right;
-  margin: 0%;
-}
-
-#leftNav{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: left;
-}
-
-#logo{
-    display: inline;
-    margin-left: 10%;
-}
-
-.searchBox {
-  display: inline;
-  align-items: left;
-  width: 100%;
-  border: 1px solid #741DFF;
-  border-radius: 25px;
-}
-
-/* input form */
-#search{
-  color: #741DFF;
-  width: 70%;
-  height: 100%;
-  vertical-align: middle;
-}
-
-.icon{
-  color: #741DFF;
-  padding: 2.5%;
-  float: right;
-}
-
-#weather, #topLine, #temp, #heart, #mypage{
-    /* margin-left: 10%; */
-}
-
-#weather, #temp{
-  color: #cbcbcb;
-  font-size: 120%;
-}
-
-/* #weather, #temp{
-  vertical-align: middle;
-}  */
-
 
 
 </style>
