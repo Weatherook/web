@@ -6,12 +6,17 @@
                 <img src="../assets/zezudo.jpg" class="feed-image">
             </v-flex>
 
-            <v-flex column wrap xs6 sm6 md6 lg6 pl-3 pt-3 pr-3>
-                <v-flex>
+            <v-flex row wrap xs6 sm6 md6 lg6 pl-3 pt-3 pr-3>
+                <v-layout row>
                     <span class="purple-text">7월 25일</span>
                     <span class="purple-text">맑음</span>
                     <span class="purple-text">25/31</span>
-                </v-flex>
+                    <v-spacer></v-spacer>
+                    <v-flex xs1 sm1 md1 lg1 mr-4>
+                        <img src="../assets/photo_menu@2x.png" class="see_more">
+                    </v-flex>
+
+                </v-layout>
                 <v-flex xs12 sm12 md12 lg12 mt-2 feed-content>
                 게시글 내용내용내욘내용
                 </v-flex>
@@ -90,6 +95,10 @@ export default {
     height: 35px;
     border-radius: 35px;
     margin-right: 7px;
+}
+
+.see_more {
+    width: 50px;
 }
 
 </style>
