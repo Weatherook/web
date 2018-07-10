@@ -1,13 +1,13 @@
 <template>
     <v-card>
-        <v-container grid-list-xs fluid>
+        <v-container grid-list-xs fluid detail-con>
           <v-layout row wrap>
             <v-flex>
-               <v-carousel :cycle="false"> 
+               <v-carousel detail-carousel :cycle="false"> 
                     <v-carousel-item v-for="(pages,index) in followingPages" :key="index">
                         <v-layout row wrap following-container>
                         <v-flex sm2 md2 lg2 column user-item v-for="(following, i) in followings.slice(index*24, index*24+24)" :key="i">
-                                <img :src="following.img" class="user_image">
+                                <img :src="following.img" class="user_img">
                                 <v-flex>{{following.name}}</v-flex>
                         </v-flex>
 
@@ -25,8 +25,6 @@
 export default {
     data() {
         return {
-            aIndex: 0,
-            // pages: this.followings.length,
             followings: [ { name:"aaaaaaa", img: "https://pbs.twimg.com/profile_images/895654109700775938/MuR13dsu_400x400.jpg" }, 
                         { name:"aaaaaaa", img: "/static/profileface.png" }, 
                         { name:"aaaaaaa", img: "/static/profileface.png" }, 
@@ -74,7 +72,7 @@ export default {
 
 <style>
 
-.user_image{
+.user_img{
     width: 80px;
     height: 80px;
     border-radius: 80px;
@@ -89,5 +87,17 @@ export default {
 
 .following-container {
     text-align: center;
+}
+
+.detail-con{
+    background: transparent;
+    overflow: hidden;
+    height: auto;
+    padding: 0%;
+}
+
+.detail-carousel{
+    width: 50%;
+    background: transparent;
 }
 </style>

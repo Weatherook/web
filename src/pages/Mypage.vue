@@ -16,12 +16,21 @@
             <div class="num_text">35</div>
             팔로워
           </v-flex>
-          <v-flex column>
+          <v-flex column following-container @click="showFollowing = true">
             <div class="num_text">35</div>
             팔로잉
           </v-flex>
+           
         </v-layout>
 
+
+            <v-dialog v-model="showFollowing" max-width="800" >
+               <FollowingDetail></FollowingDetail>
+            </v-dialog>
+        
+
+           
+           
 
         <v-layout row btns>
 
@@ -35,26 +44,30 @@
             
         </v-layout>
         <router-view></router-view>
-
-<!-- v-for="post in posts" :key="post.post_id" -->
-        <!-- <v-layout row wrap>
-          <v-flex sm6 md6 lg6 v-for = "i in 5" :key="i">
-            <img src="../assets/zezudo.jpg" alt="" class="post_image">
-          </v-flex>
-        </v-layout> -->
+       
     </v-container>
+    
     </v-app>
 </template>
 
 <script>
+import FollowingDetail from './FollowingDetail'
 export default {
+    data() {
+        return{
+            showFollowing: false
+        }
+    },
+    components: {
+        'FollowingDetail': FollowingDetail
+    }
 
 }
 </script>
 
 <style scoped>
 * {
-    background-color : #F7F7F7;
+    /* background-color : #F7F7F7; */
     text-align: center;
 }
 .user_image {
@@ -97,5 +110,9 @@ export default {
     padding-top: 20px;
     padding-bottom : 20px;
     border-top: solid 1px gray;
+}
+
+.following-container {
+    cursor: pointer;
 }
 </style>
