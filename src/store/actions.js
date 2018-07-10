@@ -12,6 +12,14 @@ export const Actions = {
         console.log('서버연결?!?!?!')
       }
     })
-  }
+  },
 
+  signIn ({ commit }, payload) {
+    axios.post('http://52.78.105.130:3004/auth/signin', payload).then(response => {
+      commit('signInSuccess', response.data)
+      if (response.status === 201) {
+        router.push('/')
+      }
+    })
+  }
 }

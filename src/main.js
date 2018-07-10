@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {store} from './store/store'
+import { store } from './store/store'
 import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import 'vuetify/dist/vuetify.min.css'

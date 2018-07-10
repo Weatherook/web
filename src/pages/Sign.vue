@@ -2,19 +2,19 @@
     <v-container grid-list-sm back fluid>
         <v-flex column wrap mr-5 sm5 md5 lg5 offset-lg6 offset-md6 offset-sm6 login-container>
             <v-flex xs2 sm2 md2 lg1 offset-lg6 offset-sm4>
-              <img src="../assets/logo_korea@2x.png" alt="" class="logo">
+              <img src="../assets/logo_korea@2x.png" class="logo">
             </v-flex>
 
             <v-layout column wrap v-if="this.signUpPageFlag == 0">
                 <v-flex offset-lg5 offset-sm3>
-                    <form>
+                    <form @submit.prevent="signInMethod">
                         <v-flex>
-                            <v-text-field placeholder="아이디" color="none"></v-text-field>
-                            <v-text-field placeholder="비밀번호" color="none"></v-text-field>
+                            <v-text-field placeholder="아이디" color="none" id="id" name="id" v-model="id" required></v-text-field>
+                            <v-text-field type="password" placeholder="비밀번호" color="none" id="password" name="password" v-model="password" required></v-text-field>
                         </v-flex>
                     
-                        <v-flex login mb-3>
-                            로그인
+                        <v-flex mb-3 login>
+                            <button type="submit">로그인</button>
                         </v-flex>
                     </form>
                 </v-flex>
@@ -184,6 +184,14 @@ export default {
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#AAAAAA";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#AAAAAA";
             }
+        },
+        signInMethod() {
+            const object = {
+                user_id : this.id,
+                user_pw : this.password
+            }
+            
+            this.$store.dispatch('signIn', object)
         }
     },
     computed: {
@@ -227,6 +235,7 @@ export default {
     color: white;
     text-align: center;
     line-height: 40px;
+    cursor: pointer;
 }
 
 .join {

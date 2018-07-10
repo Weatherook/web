@@ -1,20 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { Getters } from './getters'
-import { Mutations } from './mutations'
-import { Actions } from './actions'
-import createPersistedState from 'vuex-persistedstate'
+// import { boardGetters } from './getters.js'
+import { Mutations } from './mutations.js'
+import { Actions } from './actions.js'
 import * as Cookies from 'js-cookie'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-  state: { // 전역적인 데이터
-    boards: [],
+  state: {
     user: null
   },
   mutations: Object.assign({}, Mutations),
-  getters: Object.assign({}, Getters),
+  // getters: Object.assign({}, boardGetters),
   actions: Object.assign({}, Actions),
   plugins: [
     createPersistedState({
