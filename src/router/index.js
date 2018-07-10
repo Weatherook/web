@@ -9,6 +9,7 @@ import { SignRoutes } from './sign'
 import FollowingDetailRoutes from './followingDetail'
 
 Vue.use(Router)
+Vue
 
 export default new Router({
   routes: [HomeRoutes, MypageRoutes, TodayFeedRoutes, FollowingFeedRoutes, SignRoutes, SettingRoutes, FollowingDetailRoutes],

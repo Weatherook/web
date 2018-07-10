@@ -27,10 +27,10 @@
 
             <v-layout column wrap v-else>
               <v-flex offset-lg5 offset-sm3>
-                    <form>
+                    <form @submit.prevent="onSignUp">
                         <v-flex>
-                            <v-text-field placeholder="아이디" color="none"></v-text-field>
-                            <v-text-field placeholder="비밀번호" color="none"></v-text-field>
+                            <v-text-field placeholder="아이디" color="none" v-model="user_id"></v-text-field>
+                            <v-text-field placeholder="비밀번호" color="none" v-model="user_pw"></v-text-field>
                             <v-text-field placeholder="비밀번호 확인" color="none"></v-text-field>
                         </v-flex>
 
@@ -60,8 +60,8 @@
 
                           <v-flex column offset-sm4 offset-md4 hw-info>
                               <v-flex sm12 md12 lg12>
-                                <v-text-field placeholder="키" color="none"></v-text-field>
-                                <v-text-field placeholder="몸무게" color="none"></v-text-field>
+                                <v-text-field placeholder="키" color="none" v-model="user_height"></v-text-field>
+                                <v-text-field placeholder="몸무게" color="none" v-model="user_weight"></v-text-field>
                               </v-flex>
                           </v-flex>
 
@@ -71,7 +71,7 @@
                           </v-flex>
                           <v-layout row wrap align-center>
                             <v-flex sm2 md2 lg2 offset-sm5 offset-md5>
-                                <v-text-field color="none"></v-text-field>
+                                <v-text-field color="none" v-model="user_age"></v-text-field>
                               </v-flex>
                               <span class="age-text">세</span>
                           </v-layout>
@@ -87,7 +87,9 @@
                           </v-layout>
 
                         <v-flex offset-sm4 offset-md4>
-                            <v-flex sm6 md6 lg6 purple-btn>가입완료</v-flex>
+                            <v-flex sm6 md6 lg6 purple-btn>
+                                <button type="submit">가입완료</button>
+                            </v-flex>
                         </v-flex>
                     
                         </v-layout>
@@ -104,6 +106,15 @@ import * as easings from 'vuetify/es5/util/easing-patterns'
 export default {
     data () {
         return {
+            user_id: '',
+            user_pw: '',
+            user_gender: '',
+            user_age: '',
+            user_height: '',
+            user_weight: '',
+            user_stylelist: [],
+
+
             signUpPageFlag : 0,
             womanFlag : 0,
             manFlag : 0,
@@ -119,6 +130,21 @@ export default {
         }
     },
     methods: {
+        onSignUp () {
+            const object = {
+                user_id: this.user_id,
+                user_pw: this.user_pw,
+                user_gender: this.user_gender,
+                user_age: this.user_age,
+                user_height: this.user_height,
+                user_weight: this.user_weight,
+                user_stylelist: this.user_stylelist
+
+            }
+            console.log(object);
+            this.$store.dispatch('signUp',object)
+        },
+
         signUpPage() {
             this.signUpPageFlag = 1;
         },
@@ -127,6 +153,7 @@ export default {
             if(this.womanFlag === 0){
                 this.womanFlag = 1;
                 this.manFlag = 0;
+                this.user_gender = '여';
 
             }else {
                 this.womanFlag = 0;
@@ -136,6 +163,7 @@ export default {
             if(this.manFlag === 0) {
                 this.manFlag = 1;
                 this.womanFlag = 0;
+                this.user_gender = '남';
             }else {
                 this.manFlag = 0;
             }
@@ -148,6 +176,7 @@ export default {
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#741DFF";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#741DFF";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#FFFFFF";
+                this.user_stylelist.push(e.toElement.innerText);
             }
             else {
                 this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 0;
