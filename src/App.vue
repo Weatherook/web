@@ -38,7 +38,9 @@
             </v-flex>
 
             <v-flex mt-1 ml-3>
-              <img src="./assets/top-profileface@2x.png" class="profile_image">
+              <router-link to="/mypage/grid">
+                <img src="./assets/top-profileface@2x.png" class="profile_image">
+              </router-link>
             </v-flex>
 
           </v-layout>

@@ -35,7 +35,7 @@
                         </v-flex>
 
                         <a href="#select-part">
-                            <v-flex sm3 md3 lg3 offset-sm4 offset-md4 purple-btn>다음</v-flex>
+                            <v-flex sm3 md3 lg3 offset-sm4 offset-md4 purple-btn @click="$vuetify.goTo(target, options)">다음</v-flex>
                         </a>
 
                         <v-layout column wrap user-additional-info>
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import * as easings from 'vuetify/es5/util/easing-patterns'
 export default {
     data () {
         return {
@@ -107,7 +108,14 @@ export default {
             womanFlag : 0,
             manFlag : 0,
             styleArray : ["빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"],
-            styleFlagArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            styleFlagArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            type: 'number',
+            number: 9999,
+            selector: '#select-part',
+            duration: 300,
+            offset: 0,
+            easing: 'easeInOutCubic',
+            easings: Object.keys(easings)
         }
     },
     methods: {
@@ -148,7 +156,21 @@ export default {
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#AAAAAA";
             }
         }
-    }
+    },
+    computed: {
+      target () {
+        const value = this[this.type]
+        if (!isNaN(value)) return Number(value)
+        else return value
+      },
+      options () {
+        return {
+          duration: this.duration,
+          offset: this.offset,
+          easing: this.easing
+        }
+      }
+    }  
 }
 </script>
 
@@ -261,4 +283,5 @@ a {
     padding-left: 50px;
     text-align: center;
 }
+
 </style>
