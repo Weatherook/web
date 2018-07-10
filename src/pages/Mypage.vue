@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-container grid-list-lg fluid>
+        <v-container grid-list-lg fluid back-color>
         <v-layout column align-center>
           <img src="../assets/profileface@2x.png" alt="" class="user_image">
           <v-flex class="user_id">lc.e_y</v-flex>
@@ -67,9 +67,13 @@ export default {
 
 <style scoped>
 * {
-    /* background-color : #F7F7F7; */
     text-align: center;
 }
+
+.back-color {
+    background-color : #F7F7F7;
+}
+
 .user_image {
     width : 100px;
     height: 100px; 
