@@ -3,12 +3,12 @@
     <v-layout row wrap v-for="i in 5" :key="i">
       <v-flex xs12 sm6 offset-sm3 feed-container>
         <v-layout row wrap user-info align-center>
-          <img src="../assets/zezudo.jpg" alt="" class="user_image">
+          <img src="../assets/zezudo.jpg" class="user_image">
           <span class="user-nickname">lc.e_y</span>
           <v-spacer></v-spacer>
-          <v-btn flat icon>
-            <img src="../assets/heart@2x.png" alt="" class="likeimage">
-          </v-btn>
+          <v-flex xs1 sm1 md1>
+            <img src="../assets/heart@2x.png" class="heart-image" @click="heart_click(i)">
+          </v-flex>
           <span class="likecount">382</span>
         </v-layout>
 
@@ -16,12 +16,21 @@
           <img src="../assets/zezudo.jpg" alt="" class="feed-image">
         </v-flex>
 
-        <v-flex row xs12 sm6 md6 pa-0 ml-1>
+        <v-layout row xs12 sm6 md6 pa-0 ml-1>
           <!-- date, weather, temperature!! -->
           <span class="purple-text">7월 25일</span>
           <span class="purple-text">맑음</span>
           <span class="purple-text">25/31</span>
-        </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex row xs1 sm1 md1 lg1 pa-0 mr-1>
+            <img src="../assets/photo_menu@2x.png" class="see-more" @click.stop="detail_flag = true">
+          </v-flex>
+
+          <v-dialog v-model="detail_flag" max-width="350px" max-height="60px">
+            <DetailMenu></DetailMenu>
+          </v-dialog>            
+
+        </v-layout>
 
         <v-layout row wrap>
           <v-flex column xs12 sm12 md12 fluid ml-1>
@@ -30,7 +39,14 @@
           </v-flex>
 
           <v-flex xs12 sm12 md12 fluid ml-1>
-            <span class="comment-all">댓글 2개 모두보기</span>
+            <v-flex pa-0 @click.stop="comment_flag = true" class="all-comment">
+              <span>댓글 2개 모두보기</span>
+            </v-flex>
+
+            <v-dialog v-model="comment_flag" max-width="1000" max-height="200">
+              <FeedDetail></FeedDetail>
+            </v-dialog>
+
             <!-- for loop || 2개만? -->
             <div class="comment-container">
               <span class="comment-nickname">minkyoe</span>
@@ -51,8 +67,36 @@
 </template>
 
 <script>
+import DetailMenu from './Report'
+import FeedDetail from './FeedDetail'
 export default {
-
+  data () {
+    return {
+      detail_flag : false,
+      heart_flag : false,
+      comment_flag : false
+    }
+  },
+  components: {
+        'DetailMenu': DetailMenu
+    },
+    methods: {
+      heart_click (index) {
+        var heart_image = document.getElementsByClassName("heart-image")[index-1];
+        
+        if(this.heart_flag == false) {
+          this.heart_flag = true;
+          heart_image.src = "../../static/home/heart2@2x.png";
+        } else {
+          this.heart_flag = false;
+          heart_image.src="../../static/home/heart@2x.png";
+        }
+      }
+    },
+    components : {
+      'FeedDetail' : FeedDetail
+    }
+    
 }
 </script>
 
@@ -85,9 +129,9 @@ export default {
 }
 
 .purple-text {
-  color: purple;
+  color: #741DFF;
   font-weight: bold;
-  padding-right: 5px;
+  margin-right: 10px;
 }
 
 .feed-container {
@@ -100,13 +144,10 @@ export default {
   padding: 0 20px;
 }
 
-.likeimage {
-  width: 80%;
+.heart-image {
+  width: 110%;
   height: auto;
-}
-
-.comment-all {
-    color : lightgray;
+  cursor: pointer;
 }
 
 .comment-container {
@@ -115,6 +156,16 @@ export default {
 
 .input-comment {
     color: lightgrey;
+}
+
+.see-more {
+  width: 80%;
+  cursor: pointer;
+}
+
+.all-comment {
+  cursor: pointer;
+  color : lightgray;
 }
 
 </style>
