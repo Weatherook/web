@@ -1,43 +1,50 @@
 <template>
   <v-app>
-    <nav v-if="['Home', 'Mypage', 'MypageGrid'].indexOf($route.name) > -1">
+    <nav v-if="['Home', 'Mypage', 'MypageGrid', 'MypageList'].indexOf($route.name) > -1">
       <v-layout row wrap>
-        <img src="./assets/topimage@3x.png" class="nav-back">
+        <img src="./assets/topimage@3x.png" class="nav-back">  
+        
         <v-flex row sm3 md3 lg3 logos>
-          <img src="./assets/logo_white@2x.png" class="logo_image">
-          <img src="./assets/mainlogo@2x.png" class="main_logo_image">
+          <router-link to="/">
+            <img src="./assets/logo_white@2x.png" class="logo_image">
+            <img src="./assets/mainlogo@2x.png" class="main_logo_image">
+          </router-link>
         </v-flex>
 
-        <v-layout row wrap sm6 md6 lg6 icons>
-          <v-flex column wrap date mt-2>
-            {{ this.mm }} . {{ this.dd }} <br/>
-            {{ this.day }}
-          </v-flex>
+        <!-- <v-flex row sm5 md5 lg5 pa-0> -->
+          <v-layout row icons hidden-sm-and-down>
+              <v-flex column wrap date mt-2>
+              {{ this.mm }} . {{ this.dd }} <br/>
+              {{ this.day }}
+            </v-flex>
 
-          <v-flex ml-4 mt-1>
-            <img :src="this.weatherImage[this.weatherIndex]" class="weather_image">
-          </v-flex>
+            <v-flex ml-4 mt-1>
+              <img :src="this.weatherImage[this.weatherIndex]" class="weather_image">
+            </v-flex>
 
-          <v-flex column wrap date mt-2>
-            25℃ <br/>
-            20 / 28
-          </v-flex>
+            <v-flex column wrap date mt-2>
+              25℃ <br/>
+              20 / 28
+            </v-flex>
 
-          <v-flex ml-4>
-            <img src="./assets/topbar_line@2x.png" class="divider_image">
-          </v-flex>
+            <v-flex ml-4>
+              <img src="./assets/topbar_line@2x.png" class="divider_image">
+            </v-flex>
 
-          <v-flex mt-1 ml-2>
-            <v-btn flat icon @click="click_bell">
-              <img src="./assets/bell1@2x.png" class="bell_image">
-            </v-btn>
-          </v-flex>
+            <v-flex mt-1 ml-2>
+              <v-btn flat icon @click="click_bell">
+                <img src="./assets/bell1@2x.png" class="bell_image">
+              </v-btn>
+            </v-flex>
 
-          <v-flex mt-1 ml-3>
-            <img src="./assets/top-profileface@2x.png" class="profile_image">
-          </v-flex>
+            <v-flex mt-1 ml-3>
+              <img src="./assets/top-profileface@2x.png" class="profile_image">
+            </v-flex>
 
-        </v-layout>
+          </v-layout>
+      
+        <!-- </v-flex> -->
+
       </v-layout>
     </nav>
     <router-view/>
@@ -100,23 +107,25 @@ export default {
 
 .logos {
   position: fixed;
-  left: 13%;
-  top: 3%;
+  left: 13vw;
+  top: 2vw;
 }
 
 .logo_image {
-  width: 80px;
+  /* width: 30%; */
+  width: 7vw;
 }
 
 .main_logo_image {
-  width: 100px;
-  margin-bottom:5px;
+  /* width: 35%; */
+  margin-bottom:1vw;
+  width: 7vw;
 }
 
 .icons {
   position: fixed;
-  right: 8%;
-  top: 7%;
+  right: 6vw;
+  top: 3vw;
 }
 
 .date {
@@ -132,13 +141,13 @@ export default {
 }
 
 .bell_image {
-  width: 80%;
+  width: 70%;
 }
 
 .profile_image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
+  width: 70%;
+  height: auto;
+  border-radius: 70%;
 }
 
 .bell-content {

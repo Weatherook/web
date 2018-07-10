@@ -7,7 +7,7 @@
           </v-flex>
         </v-layout>
         
-        <v-dialog v-model="showFeed" max-width="1000" max-height="200" color="white">
+        <v-dialog v-model="showFeed" max-width="1000" max-height="200">
             <FeedDetail></FeedDetail>
         </v-dialog>
 

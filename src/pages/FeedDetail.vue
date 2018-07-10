@@ -64,6 +64,7 @@ export default {
 
 .purple-text {
     color: #741DFF;
+    margin-right: 15px;
 }
 
 .feed-content {
