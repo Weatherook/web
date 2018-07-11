@@ -1,86 +1,90 @@
 <template>
     <v-app id="setApp">
-        <v-container row column wrap id="setCon">
-            <v-layout id="setLay">
-                <v-flex>
-
-                    <v-flex style="margin-top:5%;margin-bottom:2%;" >
-                        <img id="profileface" src="../assets/profileface.png" style="margin-bottom:2%">
-                        <button id="editPhoto">사진 수정</button>
+        <v-container row column wrap>
+            <v-flex id="setLay" sm6 md6 lg6 pa-4>
+                <form @submit.prevent="modifyMypage">
+                    <v-flex>
+                        <img v-if="modiInfos.showUserResult[0].user_img" id="profileface" :src="modiInfos.showUserResult[0].user_img">
+                        <img v-else-if="modiInfos.showUserResult[0].user_img == null" id="profileface" src="../assets/profileface.png">
+                        <img v-else-if="img" id="profileface" :src="img">
+                        <input type="file" id="editPhoto" :multiple="false" @change="onFileChange" accept="image/*" value="사진 수정"/>
                     </v-flex>
                     
 
-                    <v-flex row wrap id="inputIDCon" style="margin-bottom:2%;padding-bottom:1%">
-                        <h3 id="ID">아이디</h3>
-                        <input type="text" id="inputID">
+                    <v-flex row id="inputIDCon" sm8 md8 lg8 mt-2>
+                        <span id="ID">아이디</span>
+                        <input type="text" id="inputID" :value="modiInfos.showUserResult[0].user_id">
                     </v-flex>
 
-                    <v-content id="inputIntroCon" style="margin-bottom:2%;padding-bottom:1%">
-                        <h3 id="Introduce">글</h3>
-                        <input type="text" id="inputIntro">
-                    </v-content>
+                    <v-flex id="inputIntroCon" sm8 md8 lg8 mt-3>
+                        <span id="Introduce">글</span>
+                        <input type="text" id="inputIntro" :value="this.user_desc">
+                        <!-- v-model="user_desc" -->
+                    </v-flex>
 
-                    <h3 style="color:#555555;font-weight:bold;margin-left:15%;margin-bottom:3%">개인정보</h3>
+                    <v-flex subMenu mt-5 sm8 md8 lg8> 개인정보</v-flex>
 
-                    <v-layout row wrap id="inputAgeCon" style="width:50%;margin-left:15%;margin-bottom:2%">
-                        <div class="middle" style=" display: flex; align-items: center; width:23%;padding-bottom:1%"> 
-                            <h3 style="color:#555555;display:inline;margin-right:10%;">연령</h3>
-                            <img src="../assets/top_divideline.png" width="5px" height="30px">
-                        </div>
-                       
-                        <input type="text" id="inputAge" style="width:50%;">
-                    </v-layout>
-
-                    <v-flex id="inputBodyCon" style="margin-bottom:2%">
-                        <v-layout row wrap id="inputHeightCon" style="width:35%;margin-right:5%;margin-left:15%;float:left;">
-                            <div class="middle" style=" display: flex; align-items: center; width:20%;padding-bottom:1%">
-                                <h3 style="color:#555555;display:inline;margin-right:10%">키</h3>
-                                <img src="../assets/top_divideline.png" width="5px" height="30px">
-                            </div>
-                            
-                            <input type="text" id="inputHeight" style="width:50%;padding-bottom:1%">
-                        </v-layout>
-
-                        <v-layout row wrap id="inputWeightCon" style="width:35%;margin-right:15%">
-                            <div class="middle" style=" display: flex; align-items: center; width:37%;padding-bottom:1%">
-                                <h3 style="color:#555555;display:inline;margin-right:10%">몸무게</h3>
-                                <img src="../assets/top_divideline.png" width="5px" height="30px">
-                            </div>
-                            
-                            <input type="text" id="inputWeight" style="width:50%;">
+                    <v-flex sm8 md8 lg8 id="inputAgeCon"> 
+                        <v-layout row>
+                            <span class="subtitle-text">연령</span>
+                            <img src="../assets/top_divideline.png" class="divide-line-image">
+                            <input type="text" id="inputAge" :value="user_age">
                         </v-layout>
                     </v-flex>
-                  
 
-                    <v-content id="clickStyleCon" ma-0 style="margin-left:15%;margin-right:10%">
-                        <div class="middle" style=" display: flex; align-items: center; width:50%; margin-bottom:2%;">
-                            <h3 style="color:#555555;display:inline;margin-right:3%">스타일</h3>
-                            <img src="../assets/top_divideline.png" width="5px" height="30px"> 
-                        </div>
-                        
-
-                        <v-layout row wrap text-xs-center>
-                            <v-flex row wrap xs3 sm3 md3 lg3 class="style-btn" v-for= "style in styleArray" :key="style" v-on:click="switchFlag" style="text-align:center;">
-                                    {{ style }}
+                    <v-flex sm8 md8 lg8 id="inputBodyCon">
+                        <v-layout row wrap>
+                            <v-flex sm4 md4 lg4>
+                                <v-layout row id="inputHeightCon">
+                                    <span class="subtitle-text">키</span>
+                                    <img src="../assets/top_divideline.png" class="divide-line-image">
+                                    <input type="text" id="inputHeight" class="input_height_weight" :value="user_height">
+                                </v-layout>
                             </v-flex>
-                           
-
+                            <v-spacer></v-spacer>
+                            <v-flex sm5 md5 lg5 ml-5>
+                                <v-layout row id="inputWeightCon">
+                                    <span class="subtitle-text">몸무게</span>
+                                    <img src="../assets/top_divideline.png" class="divide-line-image">
+                                    <input type="text" id="inputWeight" class="input_height_weight" :value="user_weight">
+                                </v-layout>
+                            </v-flex>
                         </v-layout>
-                    </v-content>
+                    </v-flex>
 
-                </v-flex>
+                    <v-flex sm8 md8 lg8 id="inputStyleCon">
+                        <span class="subtitle-text">스타일</span>
+                        <img src="../assets/top_divideline.png" class="divide-line-image"> 
+                        
+                        <v-layout row wrap mt-2>
+                            <v-flex row wrap xs3 sm3 md3 lg3 class="style-btn" v-for= "style in styleArray" :key="style" v-on:click="switchFlag">
+                                {{ style }}
+                            </v-flex>
+                        </v-layout>
+                    </v-flex>
 
-
-            </v-layout>
+                    <v-flex  sm3 md3 lg3 complete-btn>
+                        <button type = "submit">완료</button>
+                    </v-flex>
+                </form>
+                    
+            </v-flex>
         </v-container>
-    </v-app>
-    
+    </v-app>  
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
       data () {
         return {
+            img: null,
+            file: null,
+            user_desc: null,
+            user_age: null,
+            user_height: null,
+            user_weight: null,
+            user_style: [],
             styleArray: [
                "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"
             ],
@@ -108,15 +112,70 @@ export default {
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#ffffff";
+                this.user_style.push(e.toElement.innerText)
             }
             else {
                 this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = false;
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#FFFFFF";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
+                this.user_style.splice(this.user_style.indexOf(e.toElement.innerText),1)
             }
+        },
+        onFileChange(event) {
+            if(event.target.files[0]['type'].split('/')[0] === "image"){
+                this.file = event.target.files[0]
+                this.getImage(this.file)
+            }
+            
+        },
+        modifyMypage(){
+            const data = new FormData()
+            data.append('user_desc', this.user_desc);
+            data.append('user_age', this.user_age);
+            data.append('user_img', this.file);
+            data.append('user_height', this.user_height);
+            data.append('user_weight', this.user_weight);
+            data.append('user_stylelist', this.user_style);
+
+            this.$store.dispatch('modifyMypage', data, this.token);
+        },
+        getImage(file) {
+            const fileReader = new FileReader()
+            fileReader.onload = () => {
+                this.img = fileReader.result
+            }
+            fileReader.readAsDataURL(file)
         }
-    }
+    },
+    computed: {
+        ...mapGetters({
+            modiInfos : 'modifyInfo',
+            token: 'tokenInfo'
+        })
+    },
+    created() {
+        this.$store.dispatch('modiInfo', this.token);
+        this.user_desc = this.modiInfos.showUserResult[0].user_desc;
+        this.user_age = this.modiInfos.showUserResult[0].user_age;
+        this.user_height = this.modiInfos.showUserResult[0].user_height;
+        this.user_weight = this.modiInfos.showUserResult[0].user_weight;
+
+    },
+    mounted() {
+        var clicked_btn = document.getElementsByClassName("style-btn");
+    
+        for(var i=0; i < this.modiInfos.style.length; i++){
+            for(var j = 0; j < this.styleFlagArray.length; j++){
+                if(this.styleFlagArray[j].title == this.modiInfos.style[i]){
+                    clicked_btn[j].style.background = "#aaaaaa";
+                    clicked_btn[j].style.borderColor = "#aaaaaa";
+                    clicked_btn[j].style.color = "#ffffff";
+                }
+            }
+
+        }
+    },
 
 }
 </script>
@@ -126,35 +185,49 @@ export default {
     background: #f7f7f7;
 }
 #setLay{
-    width: 40%;
-    height: 80%;
+    height: 100%;
     border: 1px solid #cbcbcb;
     background: white;
     display:block;
     margin: 0 auto;
 }
+#profileface {
+    width: 130px;
+    height: 130px;
+    border-radius: 130px;
+}
+
 #profileface, #editPhoto{
     display:block;
     margin: 0 auto;    
 }
 #inputIDCon, #inputIntroCon{
-    display:block;
     margin: 0 auto;
-    width:70%;
-    border-bottom:1px solid #cbcbcb;
-}
-#inputAgeCon, #inputHeightCon, #inputWeightCon{
-    width:20%;
     border-bottom:1px solid #cbcbcb;
 }
 
+#inputBodyCon {
+    margin: 0 auto;
+}
+
+#inputAgeCon, #inputHeightCon, #inputWeightCon {
+    font-weight: bold;
+    border-bottom:1px solid #cbcbcb;
+    color:#555555;
+    margin: 10px auto;
+    text-align: center;
+}
+
+#inputStyleCon {
+    color:#555555;
+    margin: 10px auto;
+}
+
 #inputID, #inputIntro{
-    margin-right: 10%;
+    width: 50%;
 }
 #ID, #Introduce{
-    display: inline;
-    margin-left: 10%;
-    margin-bottom: 5%;
+    margin-left: 2%;
     color: #707070;
 }
 #ID{
@@ -164,33 +237,58 @@ export default {
     margin-right: 10%;
 }
 
-#profileface{
-    
-}
+
 #editPhoto{
     color: #741dff;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 .style-btn {
   -webkit-border-radius: 36;
   -moz-border-radius: 36;
   border-radius: 36px;
-  font-family: Arial;
   color: #aaaaaa;
   background: #ffffff;
-  padding: 10px 20px 10px 20px;
   border: solid #aaaaaa 0.8px;
   margin-bottom: 1%;
   text-decoration: none;
-  height: 30px;
+  height: 35px;
   margin-right: 5%;
+  margin-bottom: 5px;
+  text-align:center;
+  line-height: 30px;
 }
 
+.subMenu {
+    color:#555555;
+    margin: 0 auto;
+}
 
-.middle{
-    /* display: flex;
-    align-items: center;
-    width#ffffff/
-    /* margin: 0%; */
+.divide-line-image {
+    width: 5px;
+    height: 20px;
+    margin-top: 5px;
+}
+
+.subtitle-text {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.input_height_weight {
+    width: 30px
+}
+
+.complete-btn {
+    text-align: center;
+  -webkit-border-radius: 36;
+  -moz-border-radius: 36;
+  border-radius: 36px;
+  color: #741DFF;
+  padding: 10px 20px 10px 20px;
+  border: solid #741DFF 1px;
+  text-decoration: none;
+  margin: 0 auto;
 }
 </style>
