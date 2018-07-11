@@ -14,9 +14,9 @@
                             <v-container fluid fill-height grid-list-sm flat="true" pa-0 ma-0>
                                 <v-layout mt-2 row justify-center align-center flat="true" ma-0>
 
-                                    <v-flex xs3 v-for="(card,index) in page" :key="index" flat="true">
+                                    <v-flex sm3 v-for="(card,index) in page" :key="index" flat="true">
                                         <v-card flat="true">
-                                            <v-card-media :src=card.src height="300px" width="200px">
+                                            <v-card-media :src=card.commend_img height="420">
                                             </v-card-media>
                                         </v-card>
                                     </v-flex>
@@ -41,13 +41,20 @@
             <v-toolbar id="feedTabToolBar" flat="true">
                 <v-container id="feedTabBar" fluid text-xs-center>
                     <!-- 여기 slider-color 어떻게 rgb값으로 바꾸는지 모르겠 -->
-                    <v-tabs id="feedTabItem" color="transparent" slider-color="deep-purple" centered>
-                        <v-tab v-for="content in tabContents" :key="content" style="color:#7000ff" router :to="content.link">
-                            {{content.title}}
-                        </v-tab>
+                     <v-tabs id="feedTabItem" color="transparent" slider-color="deep-purple">
+                        <v-tab v-on:click="todayFeedClick" id="todayFeed" style="color:#7000ff">오늘</v-tab>
+                        <v-tab v-on:click="followingFeedClick" id="followingFeed" style="color:#7000ff">팔로잉</v-tab>
                     </v-tabs>
 
-                    <router-view/>
+                    <!-- 오늘 탭이 눌렸을 때 -->
+                    <template v-if="todayFeedClicked===1">
+                        <TodayFeed></TodayFeed>
+                    </template>
+
+                    <!-- 팔로잉 탭이 눌렸을 때 -->
+                    <template v-if="followingFeedClicked===1">
+                        <FollowingFeed></FollowingFeed>
+                    </template>
                     
                 </v-container>
                 
@@ -87,7 +94,6 @@
                     <v-flex id="filter_size_con">
                         <h3 style="color:#555555">신체사이즈</h3>
                         <v-slider
-                            v-model="fruits"
                             :tick-labels="sizesLabels"
                             :color="ex1.color"
                             :max="3"
@@ -127,7 +133,9 @@
                     </v-flex>
                 </v-flex>
 
-                <v-flex id="filter_apply_btn" class="style-btn" v-on:click="switchBtn">필터 적용</v-flex>
+                <v-flex id="filter_apply_btn" class="style-btn" v-on:click="switchBtn">
+                    <button>필터적용</button>
+                </v-flex>
 
             </v-flex>
                
@@ -144,10 +152,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Carousel, CarouselIndicators, CarouselIndicator, CarouselInner, CarouselItem, CarouselNavigation, CarouselCaption, Container, Row, Column, Card, CardImg, CardBody, CardTitle, CardText, Btn } from 'mdbvue';
+import FeedDetail from './FeedDetail'
+import FollowingFeed from './FollowingFeed'
+import TodayFeed from './TodayFeed'
 
 export default {
   data () {
     return {
+      todayFeedClicked: 1,
+      followingFeedClicked: 0,
+      showFeed : false,
+
       temp: -1,
       clickedTodayTab: 1,
       tabArray: ['오늘', '전체'],
@@ -172,19 +187,16 @@ export default {
         { title: '팔로잉', link: '/feed/following' }
       ],
       cycle: false,
-      cards: [
-        { src: 'https://st2.depositphotos.com/5723466/8465/i/950/depositphotos_84652408-stock-photo-3d-red-number-1.jpg',},
-        { src: 'https://st3.depositphotos.com/1561359/12975/i/950/depositphotos_129757262-stock-photo-3d-red-number-2.jpg',},
-        { src: 'https://static4.depositphotos.com/1011728/281/i/950/depositphotos_2810742-stock-photo-3d-render-of-red-number.jpg',},
-        { src: 'https://st.depositphotos.com/1561359/3755/v/950/depositphotos_37559667-stock-illustration-3d-shiny-red-number-4.jpg',},
-        { src: 'https://st.depositphotos.com/1561359/4118/v/950/depositphotos_41184901-stock-illustration-3d-shiny-red-number-5.jpg',}
-      ]
+   
     }
     },
     computed : {
+        ...mapGetters({
+            cards: 'todayRecommends'
+        }),
         cardPages (){
           // xl = 12, lg = 6, md = 4, sm = 3, xl = 2
-          let pageSize = 4
+          let pageSize = 5
         //   if (this.$vuetify.breakpoint.xl) {
         //     pageSize = 4
         //   } else if (this.$vuetify.breakpoint.lg) {
@@ -218,7 +230,7 @@ export default {
             $(window).scroll(function() {
                 // 현재 스크롤 위치를 가져온다.
                 var scrollTop = $(window).scrollTop();
-                var newPosition = scrollTop + (floatPosition*0.5) + "px";
+                var newPosition = scrollTop + (floatPosition*0.3) + "px";
  
                 //  애니메이션 없이 바로 따라감
                 // $("#filter").css('top', newPosition);
@@ -294,8 +306,33 @@ export default {
                   this.clickedTodayTab = 0;
               }
 
+          },
+          todayFeedClick(){
+              this.todayFeedClicked = 1;
+              this.followingFeedClicked = 0;
+          },
+          followingFeedClick(){
+              this.todayFeedClicked = 0;
+              this.followingFeedClicked = 1;
+              console.log(this.todayFeedClicked)
+              console.log(this.followingFeedClicked)
           }
-      }
+          
+      },
+      created () {
+        const object = {
+            weather_weather: 0,
+            weather_temp: 20
+        }
+        if(this.cards.length === 0){
+            this.$store.dispatch('getTodayRec',object)
+        }
+    },
+    components: {
+        'FeedDetail': FeedDetail,
+        'TodayFeed' : TodayFeed,
+        'FollowingFeed' : FollowingFeed
+    }
   }
 
 </script>
@@ -305,7 +342,7 @@ export default {
     background: #f7f7f7;
 }
 #filter{
-    width: 15%;
+    width: 13%;
     height: auto;
     border: 1px solid #cbcbcb;
     border-radius: 28px 28px 28px 28px;
@@ -416,6 +453,7 @@ h2 {
     /* width: 100%; */
     border-bottom: 1px solid #CBCBCB;
     padding: 0%;
+    margin-left: 20%;
 
 }
 
@@ -423,12 +461,17 @@ h2 {
     overflow:hidden;
     height:auto;    
 }
+.tab-title{
+    color: #7000ff;
+}
 .style-tab{
     color:#aaaaaa;
     font-weight: bold;
+    cursor: pointer;
 }
 .style-gender {
     color:#aaaaaa;
+    cursor: pointer;
 }
 
 .style-style {
@@ -451,5 +494,7 @@ h2 {
   margin-bottom: 1%;
   text-decoration: none;
   width: 50%;
+  cursor: pointer;
 }
+
 </style>

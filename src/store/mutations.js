@@ -12,6 +12,15 @@ export const Mutations = {
     state.token = payload.token
     console.log('sign In Finish')
   },
+  getFollowingsSuccess (state, payload) {
+    state.user_followings = payload.data
+  },
+  getTodayRecSuccess (state, payload) {
+    state.today_rec = payload.data
+  },
+  getTodayPopularSuccess (state, payload) {
+    state.today_feed = payload.data
+  },
   userInfo (state) {
     console.log('get user Info Start')
   },

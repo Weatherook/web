@@ -38,6 +38,14 @@
             <router-link to="/mypage/list">
                 <img src="../assets/photo2@2x.png" alt="" class="view-icon list">
             </router-link>
+
+            <v-flex order-btn>
+                <button>인기순</button>
+            </v-flex>
+
+              <v-flex order-btn>
+                <button>최신순</button>
+            </v-flex>
             
         </v-layout>
         <router-view></router-view>
@@ -128,5 +136,9 @@ export default {
 
 .following-container {
     cursor: pointer;
+}
+
+.order-btn {
+    color: #000000;
 }
 </style>
