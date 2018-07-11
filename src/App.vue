@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <nav v-if="['Home', 'Mypage', 'MypageGrid', 'MypageList'].indexOf($route.name) > -1">
+    <nav v-if="['/', '/setting','/mypage/grid', '/mypage/list', '/grid', '/list', '/feed/today/grid', '/feed/today/list', '/feed/following/grid', '/feed/following/list'].indexOf($route.path) > -1">
       <v-layout row wrap>
         <img src="./assets/topimage@3x.png" class="nav-back">  
         
         <v-flex row sm3 md3 lg3 logos>
-          <router-link to="/">
+          <router-link to="/feed/today/grid">
             <img src="./assets/logo_white@2x.png" class="logo_image">
             <img src="./assets/mainlogo@2x.png" class="main_logo_image">
           </router-link>
@@ -23,8 +23,8 @@
             </v-flex>
 
             <v-flex column wrap date mt-2>
-              25℃ <br/>
-              20 / 28
+              {{ navInfos.current_temp }} ℃ <br/>
+              {{ navInfos.temp_am }} / {{ navInfos.temp_af }}
             </v-flex>
 
             <v-flex ml-4>
@@ -32,14 +32,63 @@
             </v-flex>
 
             <v-flex mt-1 ml-2>
-              <v-btn flat icon @click="click_bell">
-                <img src="./assets/bell1@2x.png" class="bell_image">
-              </v-btn>
+               <v-menu offset-y>
+                 <v-btn slot="activator" flat icon @click="click_bell">
+                  <img src="./assets/bell1@2x.png" class="bell_image">
+                </v-btn>
+      <!-- @click="" -->
+                <v-list three-line>
+                  <v-list-tile v-for="(item, index) in this.items" :key="index" avatar>
+                    <v-list-tile-avatar>
+                      <img v-if="item.profile" :src="item.profile">
+                      <img v-else src="./assets/top-profileface@2x.png">
+                    </v-list-tile-avatar>
+ 
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        <img :src="item.image" class="board_image_style">
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+               </v-menu>    
             </v-flex>
 
             <v-flex mt-1 ml-3>
-              <router-link to="/mypage/grid">
-                <img src="./assets/top-profileface@2x.png" class="profile_image">
+              <v-menu offset-y v-if="$route.path == '/mypage/grid' || $route.path == '/mypage/list'|| $route.path == '/setting'">
+                 <v-btn slot="activator" flat icon>
+                  <img src="./assets/setting@2x.png" class="setting_image">
+                </v-btn>
+
+                <v-list subheader>
+                  <v-subheader>계정</v-subheader>
+                  <v-list-tile  v-for="(item, index) in this.settingItems" :key="index">
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{ item }}</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-subheader>공개범위 및 보안</v-subheader>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>계정 공개 범위</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-flex logout-btn>
+                      로그아웃
+                    </v-flex>
+                  </v-list-tile>
+                </v-list>
+               </v-menu>
+
+              <router-link v-else to="/mypage/grid">
+                <img v-if="navInfos.user_img === null" src="./assets/top-profileface@2x.png" class="profile_image">
+                <img v-else :src="navInfos.user_img" class="profile_image">
               </router-link>
             </v-flex>
 
@@ -55,7 +104,8 @@
   
 </template>
 
-<script>
+<script scoped>
+import {mapGetters} from 'vuex'
 export default {
   name: 'App',
    data () {
@@ -68,12 +118,26 @@ export default {
       mm : 0,
       day : '',
       week : ['일', '월', '화', '수', '목', '금', '토'],
-      weatherImage : ['../static/weather/sunny@2x.png', '../static/weather/cloud@2x.png', '../static/weather/rainy@2x.png', '../static/weather/snow@2x.png'],
-      weatherIndex : 1,
-      bell_flag : false
+      weatherImage : ['/static/weather/sunny@2x.png', '/static/weather/cloud@2x.png', '/static/weather/rainy@2x.png', '/static/weather/snow@2x.png'],
+      weatherIndex : 2,
+      bell_flag : false,
+      items : [ {profile: '/static/weather/sunny@2x.png', title: '타이틀', subtitle: '서브타이틀', image:'/static/weather/rainy@2x.png'},
+                {profile: '', title: '타이틀2', subtitle: '서브타이틀2', image:'/static/weather/rainy@2x.png'}
+      ],
+      settingItems: [
+        '비밀번호', '회원님이 좋아한 게시물', '언어'
+      ]
     }
   },
-  created() {
+  computed: {
+    ...mapGetters({
+        navInfos: 'navInfo',
+        token: 'tokenInfo'
+    })
+  },
+    created() {
+    this.$store.dispatch('getNavInfo', this.token)
+    
     var d = new Date();
     this.mm = d.getMonth() +1;
     this.dd = d.getDate();
@@ -83,7 +147,7 @@ export default {
   methods: {
     click_bell() {
       var bell_element = document.getElementsByClassName("bell_image")[0];
-      if(this.bell_flag == false) {
+      if(this.bell_flag === false) {
         this.bell_flag = true;
         bell_element.src="../static/home/bell2@2x.png";
       } else {
@@ -110,7 +174,7 @@ export default {
 .logos {
   position: fixed;
   left: 13vw;
-  top: 2vw;
+  top: 1.5vw;
 }
 
 .logo_image {
@@ -143,17 +207,34 @@ export default {
 }
 
 .bell_image {
-  width: 70%;
+  width: 25px;
 }
 
 .profile_image {
-  width: 70%;
-  height: auto;
-  border-radius: 70%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
 }
 
 .bell-content {
   background: white;
   z-index: 9999;
+}
+
+.board_image_style {
+  width: 100%;
+  height: 100%;
+}
+
+.setting_image {
+  width: 120%;
+  height: 120%;
+}
+
+.logout-btn {
+  border: 1px #AAAAAA solid;
+  color: #AAAAAA;
+  height: 40px;
+  line-height: 40px;
 }
 </style>

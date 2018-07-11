@@ -61,7 +61,6 @@ export default {
     computed: {
         followingPages (){
             var pages = Math.ceil(this.followings.length / 24)
-            console.log(pages)
             return pages
         },
        
