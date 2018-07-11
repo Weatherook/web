@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import { boardGetters } from './getters.js'
+import { Getters } from './getters.js'
 import { Mutations } from './mutations.js'
 import { Actions } from './actions.js'
 import * as Cookies from 'js-cookie'
@@ -10,10 +10,13 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    user: null
+    user: null,
+    user_followings: null,
+    today_rec: [],
+    today_feed: []
   },
   mutations: Object.assign({}, Mutations),
-  // getters: Object.assign({}, boardGetters),
+  getters: Object.assign({}, Getters),
   actions: Object.assign({}, Actions),
   plugins: [
     createPersistedState({

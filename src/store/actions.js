@@ -8,7 +8,7 @@ export const Actions = {
       commit('signUpSuccess')
       console.log(response)
       if (response.status === 201) {
-        router.push('/')
+        router.push('/feed/today/grid')
         console.log('서버연결?!?!?!')
       }
     })
@@ -20,6 +20,28 @@ export const Actions = {
       if (response.status === 201) {
         router.push('/')
       }
+    })
+  },
+
+  getFollwings ({ commit }, payload) {
+    axios.get('http://52.78.105.130:3004/user/following', {
+      headers: {
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkeCI6MSwiaWF0IjoxNTMxMDcxODY3LCJleHAiOjE1MzM2NjM4Njd9.-U9BxWAfoqO07psBi03FoMhXMVDWtfEY-OXwXAkvWJA'
+      }
+    }).then(response => {
+      commit('getFollowingsSuccess', response.data)
+    })
+  },
+
+  getTodayRec ({ commit }, payload) {
+    axios.post('http://52.78.105.130:3004/board/commend', payload).then(response => {
+      commit('getTodayRecSuccess', response.data)
+    })
+  },
+
+  getTodayPopular ({ commit }, payload) {
+    axios.get('https://weatherook.cf/board/today/popular', payload).then(response => {
+      commit('getTodayPopularSuccess', response.data)
     })
   }
 }
