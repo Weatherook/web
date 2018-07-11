@@ -1,26 +1,28 @@
 <template>
   <v-container fluid grid-list-xs>
-    <v-layout row wrap v-for="i in 5" :key="i">
+    <v-layout row wrap v-for="(item, i) in userInfos.data" :key="i">
       <v-flex xs12 sm6 offset-sm3 feed-container>
         <v-layout row wrap user-info align-center>
-          <img src="../assets/zezudo.jpg" class="user_image">
-          <span class="user-nickname">lc.e_y</span>
+          <img v-if="item.user_img == null" src="../assets/top-profileface@2x.png" class="user_image">
+          <img v-else :src="item.user_img" class="user_image">
+          <span class="user-nickname"> {{ item.user_id }} </span>
           <v-spacer></v-spacer>
           <v-flex xs1 sm1 md1>
-            <img src="../assets/heart@2x.png" class="heart-image" @click="heart_click(i)">
+            <img v-if="item.flag == 1" src="../assets/heart2@2x.png" class="heart-image" @click="heart_click(i)">
+            <img v-else src="../assets/heart@2x.png" class="heart-image" @click="heart_click(i)">
           </v-flex>
-          <span class="likecount">382</span>
+          <span class="likecount">{{ item.like_cnt }}</span>
         </v-layout>
 
         <v-flex pa-0>
-          <img src="../assets/zezudo.jpg" alt="" class="feed-image">
+          <img :src="item.board_img" class="feed-image">
         </v-flex>
 
         <v-layout row xs12 sm6 md6 pa-0 ml-1>
           <!-- date, weather, temperature!! -->
           <span class="purple-text">7월 25일</span>
-          <span class="purple-text">맑음</span>
-          <span class="purple-text">25/31</span>
+          <span class="purple-text"> {{ weather_convert(item.board_weather) }} </span>
+          <span class="purple-text">{{item.board_temp_min}}/{{item.board_temp_max}}</span>
           <v-spacer></v-spacer>
           <v-flex row xs1 sm1 md1 lg1 pa-0 mr-1>
             <img src="../assets/photo_menu@2x.png" class="see-more" @click.stop="detail_flag = true">
@@ -34,13 +36,12 @@
 
         <v-layout row wrap>
           <v-flex column xs12 sm12 md12 fluid ml-1>
-            <div class="feed-content">여기느 설명설명 설명부분</div>
-            <div class="hashtag">#해쉬태그 #해시태그</div>
+            <div class="feed-content"> {{item.board_desc}} </div>
           </v-flex>
 
           <v-flex xs12 sm12 md12 fluid ml-1>
             <v-flex pa-0 @click.stop="comment_flag = true" class="all-comment">
-              <span>댓글 2개 모두보기</span>
+              <span>댓글 {{ item.comment_cnt }}개 모두보기</span>
             </v-flex>
 
             <v-dialog v-model="comment_flag" max-width="1000" max-height="200">
@@ -48,15 +49,17 @@
             </v-dialog>
 
             <!-- for loop || 2개만? -->
-            <div class="comment-container">
-              <span class="comment-nickname">minkyoe</span>
-              <span class="comment-content">배아파바배아파아배아파</span>
-            </div>
-
-            <v-flex row wrap xs12 sm12 md12 pa-0>
-                <img src="../assets/zezudo.jpg" alt="" class="user_image">
-                <span class="input-comment">댓글...</span>
+            <v-flex class="comment-container" pa-0 mt-1 v-for="comment in item.comment_list" :key="comment">
+              <span class="comment-nickname"> {{comment.comment_id}} </span>
+              <span class="comment-content"> {{comment.comment_desc}} </span>
             </v-flex>
+
+            <v-layout row wrap ma-1>
+                <img v-if="item.user_img == null" src="../assets/top-profileface@2x.png" class="user_image">
+                <img v-else :src="item.user_img" class="user_image">
+                <v-flex row class="input-comment">댓글...</v-flex>
+            </v-layout>
+            
 
           </v-flex>
         </v-layout>
@@ -67,6 +70,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import DetailMenu from './Report'
 import FeedDetail from './FeedDetail'
 export default {
@@ -78,7 +82,8 @@ export default {
     }
   },
   components: {
-        'DetailMenu': DetailMenu
+        'DetailMenu': DetailMenu,
+        'FeedDetail' : FeedDetail
     },
     methods: {
       heart_click (index) {
@@ -91,10 +96,43 @@ export default {
           this.heart_flag = false;
           heart_image.src="../../static/home/heart@2x.png";
         }
+      },
+      weather_convert (weather_num) {
+        switch (weather_num) {
+          // 0:맑음, 1:구름 조금 2:구름 많음, 3:흐림 4:비 5:비/눈 6:눈
+          case 0: 
+          return '맑음'
+          break;
+          case 1:
+          return '구름 조금'
+          break;
+          case 2:
+          return '구름 많음'
+          break;
+          case 3:
+          return '흐림'
+          break;
+          case 4:
+          return '비'
+          break;
+          case 5:
+          return '비/눈'
+          break;
+          case 6:
+          return '눈'
+          break;
+        }
       }
     },
-    components : {
-      'FeedDetail' : FeedDetail
+    computed: {
+        ...mapGetters({
+            userInfos: 'userInfo'
+        })
+    },
+    created() {
+        if(this.userInfos === null) {
+            this.$store.dispatch('getUserInfo')
+        }
     }
     
 }
@@ -113,7 +151,7 @@ export default {
   margin-right: 7px;
 }
 
-.user-nickname, .comment-nickname, .hashtag{
+.user-nickname, .comment-nickname{
   font-weight: bold;
   color: gray;
   margin-right: 10px;
@@ -156,6 +194,7 @@ export default {
 
 .input-comment {
     color: lightgrey;
+    vertical-align: middle;
 }
 
 .see-more {

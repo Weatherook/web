@@ -9,7 +9,7 @@ export const Mutations = {
 
   // getters : 그냥 데이터 가져오는 용도
   signInSuccess (state, payload) {
-    state.user = payload.token
+    state.token = payload.token
     console.log('sign In Finish')
   },
   getFollowingsSuccess (state, payload) {
@@ -20,5 +20,33 @@ export const Mutations = {
   },
   getTodayPopularSuccess (state, payload) {
     state.today_feed = payload.data
+  },
+  userInfo (state) {
+    console.log('get user Info Start')
+  },
+  userInfoSuccess (state, payload) {
+    console.log('get user Info success')
+    state.mypage = payload
+  },
+  navInfo (state) {
+    console.log('get nav Info Start')
+  },
+  navInfoSuccess (state, payload) {
+    console.log('get nav Info Success')
+    state.nav = payload.data
+  },
+  modiMypageInfo (state) {
+    console.log('modify mypage Start')
+  },
+  modifyMypageSuccess (state, payload) {
+    console.log('modify Mypage Success')
+    state.mypage = payload.data
+  },
+  getModiInfo (state) {
+    console.log('get Modify Mypage')
+  },
+  modiInfoSuccess (state, payload) {
+    console.log('modify Mypage Success')
+    state.mypageModi = payload.data
   }
 }

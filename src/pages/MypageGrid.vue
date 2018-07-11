@@ -2,8 +2,8 @@
     <v-container grid-list-md > 
         
         <v-layout row wrap>
-          <v-flex sm6 md6 lg6 m v-for = "i in 5" :key= "i">
-            <img src="../assets/zezudo.jpg" alt="" class="post_image" @click.stop="showFeed = true">
+          <v-flex sm6 md6 lg6 m v-for = "item in userInfos.data" :key= "item">
+            <img :src="item.board_img" class="post_image" @click.stop="showFeed = true">
           </v-flex>
         </v-layout>
         
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import FeedDetail from './FeedDetail'
 export default {
     data() {
@@ -24,6 +25,16 @@ export default {
     },
     components: {
         'FeedDetail': FeedDetail
+    },
+    computed: {
+        ...mapGetters({
+            userInfos: 'userInfo'
+        })
+    },
+    created() {
+        if(this.userInfos === null) {
+            this.$store.dispatch('getUserInfo')
+        }
     }
 }
 
@@ -33,7 +44,7 @@ export default {
 .post_image {
     /* width : 380px; */
     width: 80%;
-    height : auto;
+    height : 100%;
     cursor: pointer;
 }
 
