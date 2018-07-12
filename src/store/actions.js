@@ -21,9 +21,9 @@ export const Actions = {
       }
     })
   },
-  getUserInfo ({ commit }, token) {
+  getUserInfo ({ commit }, token, other) {
     commit('userInfo')
-    axios.get('https://weatherook.cf/user/show', {
+    axios.post('https://weatherook.cf/user/show', other, {
       headers: {
         'token': token
       }
@@ -41,14 +41,17 @@ export const Actions = {
       commit('navInfoSuccess', response.data)
     })
   },
-  modifyMypage ({ commit }, payload, token) {
+  modifyMypage ({ commit }, payload) {
     commit('modiMypageInfo')
-    axios.put('https://weatherook.cf/user/setting', {
+    axios.put('https://weatherook.cf/user/setting', payload.data, {
       headers: {
-        'token': token
+        'token': payload.token
       }
     }).then(response => {
       commit('modifyMypageSuccess', response.data)
+      if (response.status === 201) {
+        router.push('/mypage/grid')
+      }
     })
   },
   modiInfo ({ commit }, token) {
@@ -81,6 +84,13 @@ export const Actions = {
   getTodayPopular ({ commit }, payload) {
     axios.get('https://weatherook.cf/board/today/popular', payload).then(response => {
       commit('getTodayPopularSuccess', response.data)
+    })
+  },
+
+  getFeedComment ({ commit }, payload) {
+    commit('getFeedCommentInfo')
+    axios.get('https://weatherook.cf/board/comment/' + payload).then(response => {
+      commit('getFeedCommentSuccess', response.data)
     })
   }
 }

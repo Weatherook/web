@@ -22,7 +22,7 @@
               <img :src="this.weatherImage[this.weatherIndex]" class="weather_image">
             </v-flex>
 
-            <v-flex column wrap date mt-2>
+            <v-flex column wrap date mt-2 ml-2> 
               {{ navInfos.current_temp }} ℃ <br/>
               {{ navInfos.temp_am }} / {{ navInfos.temp_af }}
             </v-flex>
@@ -31,7 +31,7 @@
               <img src="./assets/topbar_line@2x.png" class="divider_image">
             </v-flex>
 
-            <v-flex mt-1 ml-2>
+            <v-flex mt-2 ml-2>
                <v-menu offset-y>
                  <v-btn slot="activator" flat icon @click="click_bell">
                   <img src="./assets/bell1@2x.png" class="bell_image">
@@ -67,7 +67,7 @@
 
                 <v-list subheader>
                   <v-subheader>계정</v-subheader>
-                  <v-list-tile  v-for="(item, index) in this.settingItems" :key="index">
+                  <v-list-tile  v-for="(item, index) in this.settingItems" :key="index" @click="$router.push('/setting')">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ item }}</v-list-tile-title>
                     </v-list-tile-content>
@@ -125,7 +125,7 @@ export default {
                 {profile: '', title: '타이틀2', subtitle: '서브타이틀2', image:'/static/weather/rainy@2x.png'}
       ],
       settingItems: [
-        '비밀번호', '회원님이 좋아한 게시물', '언어'
+        '회원정보 수정','비밀번호', '회원님이 좋아한 게시물', '언어'
       ]
     }
   },
@@ -160,8 +160,11 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Noto+Sans');
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
 }
@@ -196,10 +199,11 @@ export default {
 
 .date {
   text-align: center;
+  line-height: 30px;
 }
 
 .weather_image {
-  width: 80%;
+  width: 100%;
 }
 
 .divider_image {
@@ -207,13 +211,13 @@ export default {
 }
 
 .bell_image {
-  width: 25px;
+  width: 100%;
 }
 
 .profile_image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
+  width: 65px;
+  height: 65px;
+  border-radius: 65px;
 }
 
 .bell-content {
@@ -227,8 +231,8 @@ export default {
 }
 
 .setting_image {
-  width: 120%;
-  height: 120%;
+  width: 150%;
+  height: 150%;
 }
 
 .logout-btn {
@@ -236,5 +240,6 @@ export default {
   color: #AAAAAA;
   height: 40px;
   line-height: 40px;
+  text-align: center;
 }
 </style>
