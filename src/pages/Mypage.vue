@@ -74,7 +74,10 @@ export default {
         })
     },
     created() {
-        this.$store.dispatch('getUserInfo',this.token)
+        var other = {
+            other_id : ""
+        }
+        this.$store.dispatch('getUserInfo',this.token, other)
     }
 
 }

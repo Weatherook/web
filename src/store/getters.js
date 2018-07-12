@@ -32,3 +32,9 @@ export const mypageInfoGetters = {
     return state.mypageModi
   }
 }
+
+export const FeedCommentGetters = {
+  feedCommentInfo (state, getters) {
+    return state.feedComment
+  }
+}
