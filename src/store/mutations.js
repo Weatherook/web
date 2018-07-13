@@ -91,5 +91,10 @@ export const Mutations = {
   getAlarmSuccess (state, payload) {
     console.log('get alarm Info Success')
     state.alarm = payload.data
+  },
+  getFollowerSuccess (state, payload) {
+    console.log('get followers Success')
+    state.user_followers = payload.data
+    console.log(payload.data)
   }
 }

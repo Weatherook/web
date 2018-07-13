@@ -66,8 +66,8 @@ export default {
 
 .post_image {
     /* width : 380px; */
-    width: 80%;
-    height : 100%;
+    width: 450px;
+    height : 450px;
     cursor: pointer;
 }
 
