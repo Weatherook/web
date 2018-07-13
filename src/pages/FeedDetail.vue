@@ -13,8 +13,12 @@
                     <span class="purple-text">{{ propsdata.board_temp_min }}/{{ propsdata.board_temp_max }}</span>
                     <v-spacer></v-spacer>
                     <v-flex xs1 sm1 md1 lg1 mr-4>
-                        <img src="../assets/photo_menu@2x.png" class="see_more">
+                        <img src="../assets/photo_menu@2x.png" class="see_more" @click.stop="detail_flag = true">
                     </v-flex>
+
+                    <v-dialog v-model="detail_flag" max-width="350px" max-height="60px">
+                        <DetailMenu class="detail_menu"></DetailMenu>
+                    </v-dialog>  
 
                 </v-layout>
                 <v-flex xs12 sm12 md12 lg12 mt-2 feed-content>
@@ -52,11 +56,12 @@
 </template>
 
 <script>
+import DetailMenu from './Report'
 import {mapGetters} from 'vuex'
 export default {
     data () {
         return {
-
+            detail_flag: false
         }
     },
     props: ['propsdata', 'propscommentdata'],
@@ -118,6 +123,9 @@ export default {
     created() {
 
     },
+    components: {
+        'DetailMenu': DetailMenu
+    }
 }
 </script>
 

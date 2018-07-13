@@ -13,7 +13,7 @@
 
                     <v-flex row id="inputIDCon" sm8 md8 lg8 mt-4>
                         <span id="ID">아이디</span>
-                        <input type="text" id="inputID" :value="modiInfos.showUserResult[0].user_id">
+                        <span id="inputID"> {{ modiInfos.showUserResult[0].user_id }}</span>
                     </v-flex>
 
                     <v-flex id="inputIntroCon" sm8 md8 lg8 mt-4>
@@ -143,7 +143,7 @@ export default {
                 data : data,
                 token : this.token
             }
-
+            console.log(payload, '*************8')
             this.$store.dispatch('modifyMypage', payload);
         },
         getImage(file) {
@@ -235,7 +235,7 @@ export default {
 }
 
 #inputID, #inputIntro{
-    width: 50%;
+    width: 70%;
 }
 #ID, #Introduce{
     margin-left: 2%;

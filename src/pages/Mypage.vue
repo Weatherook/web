@@ -130,7 +130,7 @@ export default {
 }
 
 .btns {
-    padding-left: 6%;
+    padding-left: 15%;
     padding-top: 20px;
     padding-bottom : 20px;
     border-top: solid 1px gray;

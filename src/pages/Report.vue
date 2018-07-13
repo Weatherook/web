@@ -19,10 +19,6 @@ export default {
 </script>
 
 <style>
-* {
-    text-align: center;
-}
-
 .item {
     width: 350px;
     height: 60px;
