@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-container grid-list-xs pa-0>
+        <v-container grid-list-xs pa-0 align-center>
             <v-flex item>
               신고하기
             </v-flex>
@@ -19,16 +19,13 @@ export default {
 </script>
 
 <style>
-* {
-    text-align: center;
-}
-
 .item {
     width: 350px;
     height: 60px;
     line-height: 60px;
     overflow: hidden;
     cursor: pointer;
+    text-align: center;
 }
 
 .item:hover {

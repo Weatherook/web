@@ -21,11 +21,11 @@ export const Actions = {
       }
     })
   },
-  getUserInfo ({ commit }, token) {
+  getUserInfo ({ commit }, payload) {
     commit('userInfo')
-    axios.get('https://weatherook.cf/user/show', {
+    axios.post('https://weatherook.cf/user/show', {other_id: payload.other_id}, {
       headers: {
-        'token': token
+        'token': payload.token
       }
     }).then(response => {
       commit('userInfoSuccess', response.data)
@@ -41,14 +41,17 @@ export const Actions = {
       commit('navInfoSuccess', response.data)
     })
   },
-  modifyMypage ({ commit }, payload, token) {
+  modifyMypage ({ commit }, payload) {
     commit('modiMypageInfo')
-    axios.put('https://weatherook.cf/user/setting', {
+    axios.put('https://weatherook.cf/user/setting', payload.data, {
       headers: {
-        'token': token
+        'token': payload.token
       }
     }).then(response => {
       commit('modifyMypageSuccess', response.data)
+      if (response.status === 201) {
+        router.push('/mypage/grid')
+      }
     })
   },
   modiInfo ({ commit }, token) {
@@ -87,7 +90,6 @@ export const Actions = {
       commit('getTodayPopularSuccess', response.data)
     })
   },
-
   getTodayNew ({ commit }, token) {
     axios.get('https://weatherook.cf/board/today/latest', {
       headers: {
@@ -107,7 +109,6 @@ export const Actions = {
       commit('getFollowingFeedSuccess', response.data)
     })
   },
-
   getAllFilter ({ commit }, payload) {
     axios.post('https://weatherook.cf/board/filter', payload.object, {
       headers: {
@@ -125,6 +126,44 @@ export const Actions = {
       }
     }).then(response => {
       commit('getTodayFilterSuccess', response.data)
+    })
+  },
+  getFeedComment ({ commit }, payload) {
+    commit('getFeedCommentInfo')
+    axios.get('https://weatherook.cf/board/comment/' + payload.board_idx, {
+      headers: {
+        token: payload.token
+      }
+    }).then(response => {
+      commit('getFeedCommentSuccess', response.data)
+    })
+  },
+  registerComment ({ commit }, payload) {
+    commit('registerCommentStart')
+    axios.post('https://weatherook.cf/board/comment', payload.payload, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('registerCommentSuccess', response.data)
+    })
+  },
+  changeLike ({ commit }, payload) {
+    axios.post('https://weatherook.cf/board/like', {board_idx: payload.board_idx}, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('likeSuccess', response.data)
+    })
+  },
+  getAlarmInfo ({ commit }, token) {
+    axios.get('https://weatherook.cf/user/news', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
+      commit('getAlarmSuccess', response.data)
     })
   }
 }

@@ -1,14 +1,14 @@
 <template>
-    <v-container grid-list-md > 
+    <v-container grid-list-md v-cloak> 
         
-        <v-layout row wrap>
+        <v-layout row wrap ml-5>
           <v-flex sm6 md6 lg6 m v-for = "item in userInfos.data" :key= "item">
-            <img :src="item.board_img" class="post_image" @click.stop="showFeed = true">
+            <img :src="item.board_img" class="post_image" @click.stop="showFeed = true" @click="clickedFeed(item)">
           </v-flex>
         </v-layout>
         
         <v-dialog v-model="showFeed" max-width="1000" max-height="200">
-            <FeedDetail></FeedDetail>
+            <FeedDetail :propsdata="propsItem" :propscommentdata="propsComment"></FeedDetail>
         </v-dialog>
 
     </v-container>
@@ -20,7 +20,9 @@ import FeedDetail from './FeedDetail'
 export default {
     data() {
         return {
-            showFeed : false
+            showFeed : false,
+            propsItem : null,
+            propsComment : null
         }
     },
     components: {
@@ -28,12 +30,23 @@ export default {
     },
     computed: {
         ...mapGetters({
-            userInfos: 'userInfo'
+            userInfos: 'userInfo',
+            commentItems: 'feedCommentInfo',
+            token: 'tokenInfo'
         })
     },
     created() {
-        if(this.userInfos === null) {
-            this.$store.dispatch('getUserInfo')
+        this.$store.dispatch('getUserInfo')
+    },
+    methods: {
+        clickedFeed (item) {
+            this.propsItem = item;
+            var payload = {
+                board_idx: item.board_idx,
+                token: this.token
+            }
+            this.$store.dispatch('getFeedComment', payload);
+            this.propsComment = this.commentItems;
         }
     }
 }
@@ -41,11 +54,16 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
+
 .post_image {
     /* width : 380px; */
     width: 80%;
     height : 100%;
     cursor: pointer;
 }
+
 
 </style>

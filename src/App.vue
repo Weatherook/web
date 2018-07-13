@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <nav v-if="['/', '/setting','/mypage/grid', '/mypage/list', '/grid', '/list', '/feed/today/grid', '/feed/today/list', '/feed/following/grid', '/feed/following/list'].indexOf($route.path) > -1">
+    <nav v-if="['/setting','/mypage/grid', '/mypage/list', '/grid', '/list', '/feed/today/grid', '/feed/today/list', '/feed/following/grid', '/feed/following/list'].indexOf($route.path) > -1">
       <v-layout row wrap>
         <img src="./assets/topimage@3x.png" class="nav-back">  
         
@@ -22,7 +22,7 @@
               <img :src="this.weatherImage[this.weatherIndex]" class="weather_image">
             </v-flex>
 
-            <v-flex column wrap date mt-2>
+            <v-flex column wrap date mt-2 ml-2> 
               {{ navInfos.current_temp }} ℃ <br/>
               {{ navInfos.temp_am }} / {{ navInfos.temp_af }}
             </v-flex>
@@ -31,27 +31,28 @@
               <img src="./assets/topbar_line@2x.png" class="divider_image">
             </v-flex>
 
-            <v-flex mt-1 ml-2>
+            <v-flex mt-2 ml-2>
                <v-menu offset-y>
                  <v-btn slot="activator" flat icon @click="click_bell">
                   <img src="./assets/bell1@2x.png" class="bell_image">
                 </v-btn>
       <!-- @click="" -->
                 <v-list three-line>
-                  <v-list-tile v-for="(item, index) in this.items" :key="index" avatar>
+                  <v-list-tile v-for="(item, index) in alarms.slice(0,5)" :key="index" avatar>
                     <v-list-tile-avatar>
-                      <img v-if="item.profile" :src="item.profile">
+                      <img v-if="item.comment_img" :src="item.comment_img">
                       <img v-else src="./assets/top-profileface@2x.png">
                     </v-list-tile-avatar>
  
                     <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                      <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                      <v-list-tile-title v-if="item.flag == 0">{{ item.comment_id }} {{ item.comment_str }}</v-list-tile-title>
+                      <v-list-tile-sub-title v-if="item.flag == 0">{{ item.comment_desc }}</v-list-tile-sub-title>
+                      <v-list-tile-sub-title v-if="item.flag == 0">{{ convertDate(item.date_modify) }}</v-list-tile-sub-title>
                     </v-list-tile-content>
-
+                    
                     <v-list-tile-content>
-                      <v-list-tile-title>
-                        <img :src="item.image" class="board_image_style">
+                      <v-list-tile-title v-if="item.flag == 0">
+                        <img :src="item.board_img" class="board_image_style">
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -59,7 +60,7 @@
                </v-menu>    
             </v-flex>
 
-            <v-flex mt-1 ml-3>
+            <v-flex mt-2 ml-4>
               <v-menu offset-y v-if="$route.path == '/mypage/grid' || $route.path == '/mypage/list'|| $route.path == '/setting'">
                  <v-btn slot="activator" flat icon>
                   <img src="./assets/setting@2x.png" class="setting_image">
@@ -67,7 +68,7 @@
 
                 <v-list subheader>
                   <v-subheader>계정</v-subheader>
-                  <v-list-tile  v-for="(item, index) in this.settingItems" :key="index">
+                  <v-list-tile  v-for="(item, index) in this.settingItems" :key="index" @click="$router.push('/setting')">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ item }}</v-list-tile-title>
                     </v-list-tile-content>
@@ -121,18 +122,16 @@ export default {
       weatherImage : ['/static/weather/sunny@2x.png', '/static/weather/cloud@2x.png', '/static/weather/rainy@2x.png', '/static/weather/snow@2x.png'],
       weatherIndex : 2,
       bell_flag : false,
-      items : [ {profile: '/static/weather/sunny@2x.png', title: '타이틀', subtitle: '서브타이틀', image:'/static/weather/rainy@2x.png'},
-                {profile: '', title: '타이틀2', subtitle: '서브타이틀2', image:'/static/weather/rainy@2x.png'}
-      ],
       settingItems: [
-        '비밀번호', '회원님이 좋아한 게시물', '언어'
+        '회원정보 수정','비밀번호', '회원님이 좋아한 게시물', '언어'
       ]
     }
   },
   computed: {
     ...mapGetters({
         navInfos: 'navInfo',
-        token: 'tokenInfo'
+        token: 'tokenInfo',
+        alarms: 'alarmInfo'
     })
   },
     created() {
@@ -143,25 +142,39 @@ export default {
     this.dd = d.getDate();
     this.day = d.getDay();
     this.day = this.week[this.day] + "요일";
+
+    this.$store.dispatch('getAlarmInfo', this.token)
   },
   methods: {
     click_bell() {
       var bell_element = document.getElementsByClassName("bell_image")[0];
+
       if(this.bell_flag === false) {
         this.bell_flag = true;
-        bell_element.src="../static/home/bell2@2x.png";
+        bell_element.src="/static/home/bell2@2x.png";
       } else {
         this.bell_flag = false;
-        bell_element.src="../static/home/bell1@2x.png";
+        bell_element.src="/static/home/bell1@2x.png";
       }
+    },
+    convertDate(dateString){
+          var originDate = dateString
+          var strArray = originDate.split('-')
+          var month = strArray[0]
+          var date = strArray[1]
+          var convertDate = String(month) + "월 " + String(date) + "일"
+          return convertDate
     }
   }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Noto+Sans');
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
 }
@@ -190,16 +203,17 @@ export default {
 
 .icons {
   position: fixed;
-  right: 6vw;
-  top: 3vw;
+  right: 8vw;
+  top: 4vw;
 }
 
 .date {
   text-align: center;
+  line-height: 30px;
 }
 
 .weather_image {
-  width: 80%;
+  width: 100%;
 }
 
 .divider_image {
@@ -207,13 +221,13 @@ export default {
 }
 
 .bell_image {
-  width: 25px;
+  width: 100%;
 }
 
 .profile_image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
+  width: 65px;
+  height: 65px;
+  border-radius: 65px;
 }
 
 .bell-content {
@@ -222,13 +236,13 @@ export default {
 }
 
 .board_image_style {
-  width: 100%;
-  height: 100%;
+  width: 60px;
+  height: 60px;
 }
 
 .setting_image {
-  width: 120%;
-  height: 120%;
+  width: 150%;
+  height: 150%;
 }
 
 .logout-btn {
@@ -236,5 +250,6 @@ export default {
   color: #AAAAAA;
   height: 40px;
   line-height: 40px;
+  text-align: center;
 }
 </style>

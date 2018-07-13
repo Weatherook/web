@@ -1,5 +1,5 @@
 <template>
-    <v-app id="setApp">
+    <!-- <v-app id="setApp"> -->
         <v-container row column wrap>
             <v-flex id="setLay" sm6 md6 lg6 pa-4>
                 <form @submit.prevent="modifyMypage">
@@ -11,14 +11,14 @@
                     </v-flex>
                     
 
-                    <v-flex row id="inputIDCon" sm8 md8 lg8 mt-2>
+                    <v-flex row id="inputIDCon" sm8 md8 lg8 mt-4>
                         <span id="ID">아이디</span>
-                        <input type="text" id="inputID" :value="modiInfos.showUserResult[0].user_id">
+                        <span id="inputID"> {{ modiInfos.showUserResult[0].user_id }}</span>
                     </v-flex>
 
-                    <v-flex id="inputIntroCon" sm8 md8 lg8 mt-3>
+                    <v-flex id="inputIntroCon" sm8 md8 lg8 mt-4>
                         <span id="Introduce">글</span>
-                        <input type="text" id="inputIntro" :value="this.user_desc">
+                        <input type="text" id="inputIntro" v-model="user_desc">
                         <!-- v-model="user_desc" -->
                     </v-flex>
 
@@ -28,7 +28,7 @@
                         <v-layout row>
                             <span class="subtitle-text">연령</span>
                             <img src="../assets/top_divideline.png" class="divide-line-image">
-                            <input type="text" id="inputAge" :value="user_age">
+                            <input type="text" id="inputAge" v-model="user_age" class="input_height_weight">
                         </v-layout>
                     </v-flex>
 
@@ -38,7 +38,7 @@
                                 <v-layout row id="inputHeightCon">
                                     <span class="subtitle-text">키</span>
                                     <img src="../assets/top_divideline.png" class="divide-line-image">
-                                    <input type="text" id="inputHeight" class="input_height_weight" :value="user_height">
+                                    <input type="text" id="inputHeight" class="input_height_weight" v-model="user_height">
                                 </v-layout>
                             </v-flex>
                             <v-spacer></v-spacer>
@@ -46,7 +46,7 @@
                                 <v-layout row id="inputWeightCon">
                                     <span class="subtitle-text">몸무게</span>
                                     <img src="../assets/top_divideline.png" class="divide-line-image">
-                                    <input type="text" id="inputWeight" class="input_height_weight" :value="user_weight">
+                                    <input type="text" id="inputWeight" class="input_height_weight" v-model="user_weight">
                                 </v-layout>
                             </v-flex>
                         </v-layout>
@@ -56,7 +56,7 @@
                         <span class="subtitle-text">스타일</span>
                         <img src="../assets/top_divideline.png" class="divide-line-image"> 
                         
-                        <v-layout row wrap mt-2>
+                        <v-layout row wrap mt-2 class="styleContainer">
                             <v-flex row wrap xs3 sm3 md3 lg3 class="style-btn" v-for= "style in styleArray" :key="style" v-on:click="switchFlag">
                                 {{ style }}
                             </v-flex>
@@ -70,7 +70,7 @@
                     
             </v-flex>
         </v-container>
-    </v-app>  
+    <!-- </v-app>   -->
 </template>
 
 <script>
@@ -80,22 +80,18 @@ export default {
         return {
             img: null,
             file: null,
-            user_desc: null,
-            user_age: null,
-            user_height: null,
-            user_weight: null,
-            user_style: [],
+            user_stylelist: [],
             styleArray: [
-               "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"
+               "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "심플", "댄디", "로맨틱", "그 외"
             ],
             styleFlagArray: [
                 { title: "빈티지", flag: false },
-                { title: "스트릿", flag: true },
+                { title: "스트릿", flag: false },
                 { title: "클래식", flag: false },
                 { title: "모던", flag: false },
                 { title: "캐쥬얼", flag: false },
                 { title: "유스", flag: false },
-                { title: "엘레강스", flag: false },
+                { title: "심플", flag: false },
                 { title: "댄디", flag: false },
                 { title: "로맨틱", flag: false },
                 { title: "그 외", flag: false },
@@ -112,14 +108,14 @@ export default {
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#ffffff";
-                this.user_style.push(e.toElement.innerText)
+                this.user_stylelist.push(e.toElement.innerText)
             }
             else {
                 this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = false;
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.background = "#FFFFFF";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.borderColor = "#aaaaaa";
                 clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-                this.user_style.splice(this.user_style.indexOf(e.toElement.innerText),1)
+                this.user_stylelist.splice(this.user_stylelist.indexOf(e.toElement.innerText),1)
             }
         },
         onFileChange(event) {
@@ -130,15 +126,25 @@ export default {
             
         },
         modifyMypage(){
-            const data = new FormData()
+            var data = new FormData()
+        
             data.append('user_desc', this.user_desc);
             data.append('user_age', this.user_age);
+            data.append('user_gender', this.user_gender);
             data.append('user_img', this.file);
             data.append('user_height', this.user_height);
             data.append('user_weight', this.user_weight);
-            data.append('user_stylelist', this.user_style);
 
-            this.$store.dispatch('modifyMypage', data, this.token);
+            for(var i = 0; i < this.user_stylelist.length; i++) {
+                data.append('user_stylelist[]', this.user_stylelist[i]);
+            }
+            
+            var payload = {
+                data : data,
+                token : this.token
+            }
+            console.log(payload, '*************8')
+            this.$store.dispatch('modifyMypage', payload);
         },
         getImage(file) {
             const fileReader = new FileReader()
@@ -158,6 +164,7 @@ export default {
         this.$store.dispatch('modiInfo', this.token);
         this.user_desc = this.modiInfos.showUserResult[0].user_desc;
         this.user_age = this.modiInfos.showUserResult[0].user_age;
+        this.user_gender = this.modiInfos.showUserResult[0].user_gender;
         this.user_height = this.modiInfos.showUserResult[0].user_height;
         this.user_weight = this.modiInfos.showUserResult[0].user_weight;
 
@@ -166,14 +173,15 @@ export default {
         var clicked_btn = document.getElementsByClassName("style-btn");
     
         for(var i=0; i < this.modiInfos.style.length; i++){
+            this.user_stylelist.push(this.modiInfos.style[i]);
             for(var j = 0; j < this.styleFlagArray.length; j++){
                 if(this.styleFlagArray[j].title == this.modiInfos.style[i]){
+                    this.styleFlagArray[j].flag = true;
                     clicked_btn[j].style.background = "#aaaaaa";
                     clicked_btn[j].style.borderColor = "#aaaaaa";
                     clicked_btn[j].style.color = "#ffffff";
                 }
             }
-
         }
     },
 
@@ -188,13 +196,16 @@ export default {
     height: 100%;
     border: 1px solid #cbcbcb;
     background: white;
-    display:block;
     margin: 0 auto;
 }
 #profileface {
-    width: 130px;
-    height: 130px;
-    border-radius: 130px;
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+}
+
+#editPhoto {
+    padding-left: 10%;
 }
 
 #profileface, #editPhoto{
@@ -224,7 +235,7 @@ export default {
 }
 
 #inputID, #inputIntro{
-    width: 50%;
+    width: 70%;
 }
 #ID, #Introduce{
     margin-left: 2%;
@@ -233,6 +244,10 @@ export default {
 #ID{
     margin-right: 2%;
 }
+#inputIntro {
+    margin-left: -3%;
+}
+
 #Introduce{
     margin-right: 10%;
 }
@@ -251,11 +266,9 @@ export default {
   color: #aaaaaa;
   background: #ffffff;
   border: solid #aaaaaa 0.8px;
-  margin-bottom: 1%;
   text-decoration: none;
   height: 35px;
-  margin-right: 5%;
-  margin-bottom: 5px;
+  margin-right: 3%;
   text-align:center;
   line-height: 30px;
 }
@@ -277,7 +290,8 @@ export default {
 }
 
 .input_height_weight {
-    width: 30px
+    width: 50px;
+    margin-left: 5px;
 }
 
 .complete-btn {
@@ -290,5 +304,8 @@ export default {
   border: solid #741DFF 1px;
   text-decoration: none;
   margin: 0 auto;
+}
+.styleContainer {
+    height: 200px;
 }
 </style>
