@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
     user: null,
     user_followings: null,
     today_rec: [],
-    today_feed: [],
+    feeds: [],
     mypage: null,
     mypageModi: null,
     token: '',

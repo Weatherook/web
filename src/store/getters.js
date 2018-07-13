@@ -5,8 +5,8 @@ export const Getters = {
   todayRecommends (state, getters) {
     return state.today_rec
   },
-  todayFeeds (state, getters) {
-    return state.today_feed
+  getFeeds (state, getters) {
+    return state.feeds
   }
 }
 export const mypageGetters = {

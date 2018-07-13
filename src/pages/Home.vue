@@ -3,7 +3,7 @@
     <v-container grid-list-md text-xs-center id="todayLookCon" fluid >
 
         <!-- 오늘의 추천 코디 상단 탭 -->
-        <v-layout row wrap id="todayLookTab">
+        <v-layout row wrap id="todayLookTab" fluid>
             <v-flex wrap>
 
                 <h2>오늘의 추천 코디</h2>
@@ -62,7 +62,7 @@
             </v-flex>
         </v-layout>
 
-        <v-layout>
+        <!-- <v-layout>
             <v-flex row id="filter">
                 <v-flex row id="filter_today_all">
                     <v-flex id="filter_today" class="style-tab" xs6 md6 lg6 xl6 v-on:click="switchTab" style="color:#741dff">오늘</v-flex>
@@ -139,11 +139,9 @@
 
             </v-flex>
                
-        </v-layout>
+        </v-layout> -->
        
     </v-container>
-
-  
 
 </v-app>
 </template>
@@ -163,7 +161,7 @@ export default {
       followingFeedClicked: 0,
       showFeed : false,
 
-      temp: -1,
+    //   temp: -1,
       clickedTodayTab: 1,
       tabArray: ['오늘', '전체'],
       tabFlagArray: [0,0],
@@ -220,93 +218,93 @@ export default {
           return pages
         }
       },
-      mounted: function(){
-          $(document).ready(function() {
+    //   mounted: function(){
+    //       $(document).ready(function() {
  
-            // 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
-            var floatPosition = parseInt($("#filter").css('top'));
-            // 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+    //         // 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+    //         var floatPosition = parseInt($("#filter").css('top'));
+    //         // 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
  
-            $(window).scroll(function() {
-                // 현재 스크롤 위치를 가져온다.
-                var scrollTop = $(window).scrollTop();
-                var newPosition = scrollTop + (floatPosition*0.3) + "px";
+    //         $(window).scroll(function() {
+    //             // 현재 스크롤 위치를 가져온다.
+    //             var scrollTop = $(window).scrollTop();
+    //             var newPosition = scrollTop + (floatPosition*0.3) + "px";
  
-                //  애니메이션 없이 바로 따라감
-                // $("#filter").css('top', newPosition);
+    //             //  애니메이션 없이 바로 따라감
+    //             // $("#filter").css('top', newPosition);
  
-                $("#filter").stop().animate({
-                    "top" : newPosition
-                }, 500);
+    //             $("#filter").stop().animate({
+    //                 "top" : newPosition
+    //             }, 500);
  
-            }).scroll();
-        });
+    //         }).scroll();
+    //     });
 
-      },
+    //   },
       methods: {
            size (val) {
                 return this.size[val]
            },
-           switchStyle(e) {
-            var clicked_btn = document.getElementsByClassName("style-style");
+        //    switchStyle(e) {
+        //     var clicked_btn = document.getElementsByClassName("style-style");
         
-            if(this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] === 0) {
-                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 1;
-                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-            }else {
-                this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 0;
-                clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-            }
-          },
-           switchGender(e) {
-            var clicked_btn = document.getElementsByClassName("style-gender");
-            console.log(e.toElement.innerText)
+        //     if(this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] === 0) {
+        //         this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 1;
+        //         clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
+        //     }else {
+        //         this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 0;
+        //         clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
+        //     }
+        //   },
+        //    switchGender(e) {
+        //     var clicked_btn = document.getElementsByClassName("style-gender");
+        //     console.log(e.toElement.innerText)
 
-            if(this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] === 0) {
-                this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 1;
-                clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-            }else {
-                this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 0;
-                clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-            }
-          },
-           switchWeather(e) {
-            var clicked_btn = document.getElementsByClassName("style-weather");
+        //     if(this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] === 0) {
+        //         this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 1;
+        //         clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
+        //     }else {
+        //         this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 0;
+        //         clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
+        //     }
+        //   },
+        //    switchWeather(e) {
+        //     var clicked_btn = document.getElementsByClassName("style-weather");
         
-            if(this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] === 0) {
-                this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 1;
-                clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-            }else {
-                this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 0;
-                clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-            }
-          },
-          switchBtn(e) {
-              var clicked_btn = document.getElementsByClassName("style-btn");
-              if(this.filterApply === 0){
-                  clicked_btn.style.color = "#ffffff"
-                  clicked_btn.style.background = "#741dff"
-                  clicked_btn.style.borderColor = "#741dff"
-              }else{
-                  clicked_btn.style.color = "#aaaaaa"
-                  clicked_btn.style.background = "#ffffff"
-                  clicked_btn.style.borderColor = "#aaaaaa"
-              }
-          },
-          switchTab(e) {
-              var clicked_btn = document.getElementsByClassName("style-tab");
+        //     if(this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] === 0) {
+        //         this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 1;
+        //         clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
+        //     }else {
+        //         this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 0;
+        //         clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
+        //     }
+        //   },
+        //   switchBtn(e) {
+        //       var clicked_btn = document.getElementsByClassName("style-btn");
+        //       if(this.filterApply === 0){
+        //           clicked_btn.style.color = "#ffffff"
+        //           clicked_btn.style.background = "#741dff"
+        //           clicked_btn.style.borderColor = "#741dff"
+        //       }else{
+        //           clicked_btn.style.color = "#aaaaaa"
+        //           clicked_btn.style.background = "#ffffff"
+        //           clicked_btn.style.borderColor = "#aaaaaa"
+        //       }
+        //   },
+        //   switchTab(e) {
+        //       var clicked_btn = document.getElementsByClassName("style-tab");
 
-              if(this.tabArray.indexOf(e.toElement.innerText)===0){
-                  clicked_btn[0].style.color = "#741dff";
-                  clicked_btn[1].style.color = "#aaaaaa";
-                  this.clickedTodayTab = 1;
-              }else{
-                  clicked_btn[1].style.color = "#741dff";
-                  clicked_btn[0].style.color = "#aaaaaa";
-                  this.clickedTodayTab = 0;
-              }
+        //       if(this.tabArray.indexOf(e.toElement.innerText)===0){
+        //           clicked_btn[0].style.color = "#741dff";
+        //           clicked_btn[1].style.color = "#aaaaaa";
+        //           this.clickedTodayTab = 1;
+        //       }else{
+        //           clicked_btn[1].style.color = "#741dff";
+        //           clicked_btn[0].style.color = "#aaaaaa";
+        //           this.clickedTodayTab = 0;
+        //       }
 
-          },
+        //   },
           todayFeedClick(){
               this.todayFeedClicked = 1;
               this.followingFeedClicked = 0;
@@ -345,7 +343,7 @@ export default {
 #homeApp{
     background: #f7f7f7;
 }
-#filter{
+/* #filter{
     width: 13%;
     height: auto;
     border: 1px solid #cbcbcb;
@@ -398,7 +396,7 @@ export default {
 
 #filter_apply_btn{
     margin: 5% auto;
-}
+} */
 
 
 #todayLookTab{
