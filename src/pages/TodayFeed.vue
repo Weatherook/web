@@ -21,12 +21,16 @@
                     <v-container grid-list-md > 
                         <v-layout row wrap>
                             <v-flex sm6 md6 lg6 xl6 v-for="feed in feeds" :key= "feed">
-                                <img :src="feed.board_img" alt="" class="post-image">
+                                <img :src="feed.board_img" alt="" class="post-image" @click.stop="showFeed = true" @click="clickedFeed(feed)">
                             </v-flex>
                         </v-layout>
                     </v-container>
                 </template>
             </v-flex>
+
+            <v-dialog v-model="showFeed" max-width="1000" max-height="200">
+                <FeedDetail :propsdata="propsItem" :propscommentdata="propsComment"></FeedDetail>
+            </v-dialog>
 
             <template v-if="listClicked===1">
                 <v-container fluid grid-list-xs>
@@ -170,10 +174,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import FeedDetail from './FeedDetail'
 
 export default {
    data () {
     return {
+        showFeed : false,
+        propsItem : null,
+        propsComment : null,
+
         gridClicked: 1,
         listClicked: 0,
         popularClicked: 1,
@@ -210,13 +219,26 @@ export default {
         active: null,
     }
   },
+  components: {
+        'FeedDetail': FeedDetail
+  },
   computed: {
         ...mapGetters({
             feeds: 'getFeeds',
+            commentItems: 'feedCommentInfo',
             token: 'tokenInfo'
         }),
   },
   methods: {
+       clickedFeed (item) {
+            this.propsItem = item;
+            var payload = {
+                board_idx: item.board_idx,
+                token: this.token
+            }
+            this.$store.dispatch('getFeedComment', payload);
+            this.propsComment = this.commentItems;
+        },
       autoHeightArray(){
           var array = new Array();
           for(var i=150; i<=180; i++){

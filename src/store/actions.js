@@ -76,7 +76,7 @@ export const Actions = {
   },
 
   getTodayRec ({ commit }, payload) {
-    axios.post('http://52.78.105.130:3004/board/commend', payload).then(response => {
+    axios.post('https://weatherook.cf/board/commend', payload).then(response => {
       commit('getTodayRecSuccess', response.data)
     })
   },
@@ -129,7 +129,6 @@ export const Actions = {
     })
   },
   getFeedComment ({ commit }, payload) {
-    commit('getFeedCommentInfo')
     axios.get('https://weatherook.cf/board/comment/' + payload.board_idx, {
       headers: {
         token: payload.token
