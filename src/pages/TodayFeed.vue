@@ -539,8 +539,8 @@ export default {
 
 /* grid css */
 .post-image {
-    width : 380px;
-    height : 380px;
+    width : 400px;
+    height : 400px;
 }
 
 /* list css */

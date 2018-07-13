@@ -67,13 +67,15 @@ export default {
             token: 'tokenInfo'
         })
     },
-    created() {
+    created() {        
+        var id = this.$store.state.otherID
+        console.log(id, '9999999999999999999999999')
         var object = {
-            other_id : this.otherId,
+            other_id : id,
             token: this.token
         }
-    
         this.$store.dispatch('getUserInfo',object)
+        
     }
 
 }
