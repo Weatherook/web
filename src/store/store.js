@@ -20,7 +20,12 @@ export const store = new Vuex.Store({
     nav: null,
     feedComment: [],
     alarm: [],
-    other_mypage: null
+    other_mypage: null,
+<<<<<<< HEAD
+    mypage_id: ''
+=======
+    otherID: ''
+>>>>>>> 8a6feedf8f9cada906ed9542a90cab506f2dc661
   },
   mutations: Object.assign({}, Mutations),
   getters: Object.assign({}, mypageGetters, tokenGetters, navGetters, mypageInfoGetters, Getters, FeedCommentGetters, AlarmGetters),
