@@ -130,16 +130,17 @@ export default {
 </script>
 
 <style>
-* {
+/* * {
     text-align: start;
-}
+} */
 
 [v-cloak] {
   display: none;
 }
 
 .feed-image {
-    width: 100%;
+    width: 450px;
+    height: 450px;
 }
 
 .purple-text {

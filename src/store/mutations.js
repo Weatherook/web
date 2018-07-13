@@ -56,34 +56,21 @@ export const Mutations = {
   },
   modifyMypageSuccess (state, payload) {
     console.log('modify Mypage Success')
-    state.mypageModi = payload.data
+    state.mypage = payload.data
   },
   getModiInfo (state) {
-    console.log('마이페이지 수정 정보 가져오기 시작')
+    console.log('get Modify Mypage')
   },
   modiInfoSuccess (state, payload) {
-    console.log('마이페이지 수정 정보 가져오기 성공')
+    console.log('modify Mypage Success')
     state.mypageModi = payload.data
-  },
-  getFeedCommentInfo (state) {
-    console.log('get feed comment info start')
-  },
-  getFeedCommentSuccess (state, payload) {
-    console.log('get feed comment Success')
-    state.feedComment = payload.data
-  },
-  registerCommentStart (state) {
-    console.log('register comment start')
-  },
-  registerCommentSuccess (state, payload) {
-    console.log('register Comment Success')
-    // state.feedComment = payload.data
-  },
-  likeSuccess (state, payload) {
-    console.log('like Success')
   },
   getAlarmSuccess (state, payload) {
     console.log('get alarm Info Success')
     state.alarm = payload.data
+  },
+  getFeedCommentSuccess (state, payload) {
+    state.feedComment = payload.data
+    console.log('get feed comment Success')
   }
 }
