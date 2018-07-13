@@ -19,7 +19,23 @@ export const Mutations = {
     state.today_rec = payload.data
   },
   getTodayPopularSuccess (state, payload) {
-    state.today_feed = payload.data
+    state.feeds = payload.data
+  },
+
+  getTodayNewSuccess (state, payload) {
+    state.feeds = payload.data
+  },
+
+  getFollowingFeedSuccess (state, payload) {
+    state.following_feed = payload.data
+  },
+
+  getAllFilterSuccess (state, payload) {
+    state.feeds = payload.data
+  },
+
+  getTodayFilterSuccess (state, payload) {
+    state.feeds = payload.data
   },
   userInfo (state) {
     console.log('get user Info Start')

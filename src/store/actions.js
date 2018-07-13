@@ -78,9 +78,53 @@ export const Actions = {
     })
   },
 
-  getTodayPopular ({ commit }, payload) {
-    axios.get('https://weatherook.cf/board/today/popular', payload).then(response => {
+  getTodayPopular ({ commit }, token) {
+    axios.get('https://weatherook.cf/board/today/popular', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
       commit('getTodayPopularSuccess', response.data)
+    })
+  },
+
+  getTodayNew ({ commit }, token) {
+    axios.get('https://weatherook.cf/board/today/latest', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
+      commit('getTodayNewSuccess', response.data)
+    })
+  },
+
+  getFollowingFeed ({ commit }, token) {
+    axios.get('https://weatherook.cf/board/follow', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
+      commit('getFollowingFeedSuccess', response.data)
+    })
+  },
+
+  getAllFilter ({ commit }, payload) {
+    axios.post('https://weatherook.cf/board/filter', payload.object, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('getAllFilterSuccess', response.data)
+    })
+  },
+
+  getTodayFilter ({ commit }, payload) {
+    axios.post('https://weatherook.cf/board/today/filter', payload.object, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('getTodayFilterSuccess', response.data)
     })
   }
 }
