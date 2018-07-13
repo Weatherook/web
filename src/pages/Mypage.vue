@@ -68,8 +68,6 @@ export default {
         })
     },
     created() {
-        // this.other_id = this.othersId;
-        console.log(this.othersId, '***********8')
         var object = {
             other_id : this.otherId,
             token: this.token
