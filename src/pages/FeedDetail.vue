@@ -30,9 +30,15 @@
 
                 <v-layout column comments-container v-cloak>
                     <!-- 댓글 -->
+<<<<<<< HEAD
+                    <v-layout row xs12 sm12 md12 lg12 comment v-for="comment in this.$store.state.feedComment" :key="comment">
+                        <router-link to="/mypage/grid">
+                            <v-flex row xs3 sm3 md3 lg3 comment-user>
+=======
                     <v-layout row xs12 sm12 md12 lg12 comment v-for="comment in this.$store.state.feedComment" :key="comment" >
                         <router-link to="/mypage/grid">
                             <v-flex row xs3 sm3 md3 lg3 comment-user  @click="storeOtherID(comment.comment_id)">
+>>>>>>> 8a6feedf8f9cada906ed9542a90cab506f2dc661
                                 {{ comment.comment_id }}
                             </v-flex>
                         </router-link>
