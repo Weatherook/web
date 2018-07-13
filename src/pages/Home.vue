@@ -16,8 +16,9 @@
 
                                     <v-flex sm3 v-for="(card,index) in page" :key="index" flat="true">
                                         <v-card flat="true">
-                                            <v-card-media :src=card.commend_img height="420">
-                                            </v-card-media>
+
+                                            <a :href="card.commend_ref"><v-card-media :src="card.commend_img" height="420">
+                                            </v-card-media></a>
                                         </v-card>
                                     </v-flex>
                                     
@@ -61,85 +62,6 @@
             </v-toolbar>
             </v-flex>
         </v-layout>
-
-        <!-- <v-layout>
-            <v-flex row id="filter">
-                <v-flex row id="filter_today_all">
-                    <v-flex id="filter_today" class="style-tab" xs6 md6 lg6 xl6 v-on:click="switchTab" style="color:#741dff">오늘</v-flex>
-                    <v-flex id="filter_all" class="style-tab" xs6 md6 lg6 xl6 v-on:click="switchTab">전체</v-flex>
-                </v-flex>
-
-                <v-flex row align-center justify-center id="filter_sex_height">
-                    <v-flex id="filter_sex" style="display:block;float:left">
-                        <v-flex style="display:block;color:#555555">성별</v-flex>
-                        <v-flex v-for= "gender in genderArray" :key="gender" v-on:click="switchGender" style="display:inline-block;">
-                            <button class="style-gender">{{ gender }}</button>
-                        </v-flex>
-                    </v-flex>
-
-                    <v-flex row id="filter_height" style="display:block;">
-                        <v-flex style="display:inline">키</v-flex>
-                        <v-menu style="display:inline" offset-y>
-                            <v-flex slot="activator" color="transparent" style="color:#741dff;display:inline" light>163</v-flex>
-                            <v-list>
-                                <v-list-tile v-for="(height, index) in dropHeights" :key="index">
-                                    <v-list-tile-title>{{ height }}</v-list-tile-title>
-                                </v-list-tile>
-                            </v-list>
-                        </v-menu>
-                    </v-flex>
-                </v-flex>
-
-                <v-flex row id="filter_size" style="border-bottom:1px solid #aaaaaa">
-                    <v-flex id="filter_size_con">
-                        <h3 style="color:#555555">신체사이즈</h3>
-                        <v-slider
-                            :tick-labels="sizesLabels"
-                            :color="ex1.color"
-                            :max="3"
-                            step="1"
-                            ticks="always"
-                            ticks-size="1"
-                            fluid
-                        ></v-slider>
-                    </v-flex>
-                </v-flex>
-
-                <v-flex column id="filter_style" style="border-bottom:1px solid #aaaaaa">
-                    <h3 style="color:#555555">스타일</h3>
-                    <v-flex row mr-2 xs4 sm4 md4 lg4 v-for= "style in styleArray" :key="style" v-on:click="switchStyle" style="display:inline;font-size:15px">
-                        <button class="style-style">{{ style }}</button>
-                    </v-flex>
-                </v-flex>
-
-                <v-flex v-if="clickedTodayTab===0" id="filter_temp" style="border-bottom:1px solid #aaaaaa">
-                    <v-flex id="filter_temp_con">
-                        <h3 style="color:#555555">기온</h3>
-                        <v-slider
-                            v-model="slider"
-                            always-dirty
-                            :color="ex1.color"
-                            :min="-30"
-                            :max="40"
-                            thumb-label="always"
-                        ></v-slider>
-                    </v-flex>
-                </v-flex>
-
-                <v-flex v-if="clickedTodayTab===0" id="filter_weather" style="border-bottom:1px solid #aaaaaa;padding-bottom:5%">
-                    <h3 style="color:#555555;padding-bottom:2%">날씨</h3>
-                    <v-flex row mr-2 xs4 sm4 md4 lg4 v-for= "weather in weatherArray" :key="weather" v-on:click="switchWeather" style="display:inline;font-size:15px">
-                        <button class="style-weather">{{ weather }}</button>
-                    </v-flex>
-                </v-flex>
-
-                <v-flex id="filter_apply_btn" class="style-btn" v-on:click="switchBtn">
-                    <button>필터적용</button>
-                </v-flex>
-
-            </v-flex>
-               
-        </v-layout> -->
        
     </v-container>
 
@@ -205,6 +127,8 @@ export default {
         //     pageSize = 1
         //   }
 
+            console.log(this.cards)
+        
           const pages = []
           for (let i=0; i<10; i++) {
 	
@@ -218,93 +142,10 @@ export default {
           return pages
         }
       },
-    //   mounted: function(){
-    //       $(document).ready(function() {
- 
-    //         // 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
-    //         var floatPosition = parseInt($("#filter").css('top'));
-    //         // 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
- 
-    //         $(window).scroll(function() {
-    //             // 현재 스크롤 위치를 가져온다.
-    //             var scrollTop = $(window).scrollTop();
-    //             var newPosition = scrollTop + (floatPosition*0.3) + "px";
- 
-    //             //  애니메이션 없이 바로 따라감
-    //             // $("#filter").css('top', newPosition);
- 
-    //             $("#filter").stop().animate({
-    //                 "top" : newPosition
-    //             }, 500);
- 
-    //         }).scroll();
-    //     });
-
-    //   },
       methods: {
            size (val) {
                 return this.size[val]
            },
-        //    switchStyle(e) {
-        //     var clicked_btn = document.getElementsByClassName("style-style");
-        
-        //     if(this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] === 0) {
-        //         this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 1;
-        //         clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-        //     }else {
-        //         this.styleFlagArray[this.styleArray.indexOf(e.toElement.innerText)] = 0;
-        //         clicked_btn[this.styleArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-        //     }
-        //   },
-        //    switchGender(e) {
-        //     var clicked_btn = document.getElementsByClassName("style-gender");
-        //     console.log(e.toElement.innerText)
-
-        //     if(this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] === 0) {
-        //         this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 1;
-        //         clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-        //     }else {
-        //         this.genderFlagArray[this.genderArray.indexOf(e.toElement.innerText)] = 0;
-        //         clicked_btn[this.genderArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-        //     }
-        //   },
-        //    switchWeather(e) {
-        //     var clicked_btn = document.getElementsByClassName("style-weather");
-        
-        //     if(this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] === 0) {
-        //         this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 1;
-        //         clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#741dff";
-        //     }else {
-        //         this.weatherFlagArray[this.weatherArray.indexOf(e.toElement.innerText)] = 0;
-        //         clicked_btn[this.weatherArray.indexOf(e.toElement.innerText)].style.color = "#aaaaaa";
-        //     }
-        //   },
-        //   switchBtn(e) {
-        //       var clicked_btn = document.getElementsByClassName("style-btn");
-        //       if(this.filterApply === 0){
-        //           clicked_btn.style.color = "#ffffff"
-        //           clicked_btn.style.background = "#741dff"
-        //           clicked_btn.style.borderColor = "#741dff"
-        //       }else{
-        //           clicked_btn.style.color = "#aaaaaa"
-        //           clicked_btn.style.background = "#ffffff"
-        //           clicked_btn.style.borderColor = "#aaaaaa"
-        //       }
-        //   },
-        //   switchTab(e) {
-        //       var clicked_btn = document.getElementsByClassName("style-tab");
-
-        //       if(this.tabArray.indexOf(e.toElement.innerText)===0){
-        //           clicked_btn[0].style.color = "#741dff";
-        //           clicked_btn[1].style.color = "#aaaaaa";
-        //           this.clickedTodayTab = 1;
-        //       }else{
-        //           clicked_btn[1].style.color = "#741dff";
-        //           clicked_btn[0].style.color = "#aaaaaa";
-        //           this.clickedTodayTab = 0;
-        //       }
-
-        //   },
           todayFeedClick(){
               this.todayFeedClicked = 1;
               this.followingFeedClicked = 0;
@@ -319,12 +160,12 @@ export default {
       },
       created () {
         const object = {
-            weather_weather: 0,
-            weather_temp: 20
+            x: 60,
+            y: 126,
+            date_type: 2
         }
-        if(this.cards.length === 0){
-            this.$store.dispatch('getTodayRec',object)
-        }
+        this.$store.dispatch('getTodayRec',object)
+    
     },
     components: {
         'FeedDetail': FeedDetail,
