@@ -69,15 +69,21 @@ export const Mutations = {
     console.log('get feed comment info start')
   },
   getFeedCommentSuccess (state, payload) {
-    console.log('get feed comment Success')
     state.feedComment = payload.data
+    console.log('get feed comment Success')
   },
-  registerCommentStart (state) {
+  registerCommentStart (state, payload) {
     console.log('register comment start')
   },
   registerCommentSuccess (state, payload) {
     console.log('register Comment Success')
-    // state.feedComment = payload.data
+    var comment = {
+      'comment_idx': payload.comment_idx,
+      'board_idx': payload.board_idx,
+      'comment_desc': payload.comment_desc,
+      'comment_id': state.mypage.showUserPageResult[0].user_id
+    }
+    state.feedComment.push(comment)
   },
   likeSuccess (state, payload) {
     console.log('like Success')

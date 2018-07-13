@@ -40,12 +40,12 @@
           </v-flex>
 
           <v-flex xs12 sm12 md12 fluid ml-1>
-            <v-flex pa-0 @click.stop="comment_flag = true" class="all-comment" @click="clickedFeed(item)">
+            <v-flex pa-0 class="all-comment" @click="clickedFeed(item)">
               <span>댓글 {{ item.comment_cnt }}개 모두보기</span>
             </v-flex>
 
             <v-dialog v-model="comment_flag" max-width="1000" max-height="200">
-              <FeedDetail :propsdata="propsItem" :propscommentdata="propsComment"></FeedDetail>
+              <FeedDetail :propsdata="propsItem"></FeedDetail>
             </v-dialog>
 
             <!-- for loop || 2개만? -->
@@ -57,9 +57,9 @@
             <v-layout row wrap ma-1>
                 <img v-if="item.user_img == null" src="../assets/top-profileface@2x.png" class="user_image">
                 <img v-else :src="item.user_img" class="user_image">
-                <v-flex row class="input-comment" @click.stop="comment_flag = true" @click="clickedFeed(item)">댓글...</v-flex>
+                <v-flex row class="input-comment" @click="clickedFeed(item)">댓글...</v-flex>
             </v-layout>
-            
+            <!-- @click.stop="comment_flag = true" -->
           </v-flex>
         </v-layout>
 
@@ -79,7 +79,7 @@ export default {
       heart_flag : [],
       comment_flag : false,
       propsItem : null,
-      propsComment : null
+      other_id: ""
     }
   },
   components: {
@@ -90,19 +90,19 @@ export default {
       heart_click (index, board) {
         var heart_image = document.getElementsByClassName("heart-image")[index];
         var heart_cnt = document.getElementsByClassName("likecount")[index];
-      
+    
         var object = {
           board_idx: board.board_idx,
           token: this.token
         }
         
         if(this.heart_flag[index] == 0) {
-          this.heart_flag[index] = true;
+          this.heart_flag[index] = 1;
           heart_image.src = "../../static/home/heart2@2x.png";
           this.$store.dispatch('changeLike', object)
           heart_cnt.innerText = Number(heart_cnt.innerText)+1;
         } else {
-          this.heart_flag[index] = false;
+          this.heart_flag[index] = 0;
           heart_image.src="../../static/home/heart@2x.png";
           this.$store.dispatch('changeLike', object)
           heart_cnt.innerText = Number(heart_cnt.innerText)-1;
@@ -149,7 +149,7 @@ export default {
           token: this.token
         }
         this.$store.dispatch('getFeedComment', payload);
-        this.propsComment = this.commentItems;
+        this.comment_flag = true
       }
     },
     computed: {
@@ -160,11 +160,14 @@ export default {
         })
     },
     created() {
-        if(this.userInfos === null) {
-            this.$store.dispatch('getUserInfo')
+        var object = {
+            other_id : this.otherId,
+            token: this.token
         }
-        for(var i = 0; i<this.userInfos.data.length; i++) {
-          this.heart_flag.push(this.userInfos.data[i].like_flag)
+        this.$store.dispatch('getUserInfo', object)
+        this.heart_flag = new Array();
+        for(var i = 0; i < this.userInfos.data.length; i++) {
+          this.heart_flag.push(this.userInfos.data[i].like_flag) 
         }
     }
     
