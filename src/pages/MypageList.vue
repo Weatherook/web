@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-xs>
+  <v-container fluid grid-list-xs v-cloak>
     <v-layout row wrap v-for="(item, i) in userInfos.data" :key="i">
       <v-flex xs12 sm6 offset-sm3 feed-container>
         <v-layout row wrap user-info align-center>
@@ -7,9 +7,9 @@
           <img v-else :src="item.user_img" class="user_image">
           <span class="user-nickname"> {{ item.user_id }} </span>
           <v-spacer></v-spacer>
-          <v-flex xs1 sm1 md1>
-            <img v-if="item.flag == 1" src="../assets/heart2@2x.png" class="heart-image" @click="heart_click(i)">
-            <img v-else src="../assets/heart@2x.png" class="heart-image" @click="heart_click(i)">
+          <v-flex xs1 sm1 md1 pa-0 ma-0 pt-1 heart-container>
+            <img v-if="item.like_flag == 1" src="../assets/heart2@2x.png" class="heart-image" @click="heart_click(i, item)">
+            <img v-else src="../assets/heart@2x.png" class="heart-image" @click="heart_click(i, item)">
           </v-flex>
           <span class="likecount">{{ item.like_cnt }}</span>
         </v-layout>
@@ -20,7 +20,7 @@
 
         <v-layout row xs12 sm6 md6 pa-0 ml-1>
           <!-- date, weather, temperature!! -->
-          <span class="purple-text">7월 25일</span>
+          <span class="purple-text">{{ convertDate(item.board_date) }}</span>
           <span class="purple-text"> {{ weather_convert(item.board_weather) }} </span>
           <span class="purple-text">{{item.board_temp_min}}/{{item.board_temp_max}}</span>
           <v-spacer></v-spacer>
@@ -29,23 +29,23 @@
           </v-flex>
 
           <v-dialog v-model="detail_flag" max-width="350px" max-height="60px">
-            <DetailMenu></DetailMenu>
+            <DetailMenu class="detail_menu"></DetailMenu>
           </v-dialog>            
 
         </v-layout>
 
         <v-layout row wrap>
-          <v-flex column xs12 sm12 md12 fluid ml-1>
+          <v-flex column xs12 sm12 md12 fluid ml-1 pa-0 pt-1 pl-2>
             <div class="feed-content"> {{item.board_desc}} </div>
           </v-flex>
 
           <v-flex xs12 sm12 md12 fluid ml-1>
-            <v-flex pa-0 @click.stop="comment_flag = true" class="all-comment">
+            <v-flex pa-0 @click.stop="comment_flag = true" class="all-comment" @click="clickedFeed(item)">
               <span>댓글 {{ item.comment_cnt }}개 모두보기</span>
             </v-flex>
 
             <v-dialog v-model="comment_flag" max-width="1000" max-height="200">
-              <FeedDetail></FeedDetail>
+              <FeedDetail :propsdata="propsItem" :propscommentdata="propsComment"></FeedDetail>
             </v-dialog>
 
             <!-- for loop || 2개만? -->
@@ -57,10 +57,9 @@
             <v-layout row wrap ma-1>
                 <img v-if="item.user_img == null" src="../assets/top-profileface@2x.png" class="user_image">
                 <img v-else :src="item.user_img" class="user_image">
-                <v-flex row class="input-comment">댓글...</v-flex>
+                <v-flex row class="input-comment" @click.stop="comment_flag = true" @click="clickedFeed(item)">댓글...</v-flex>
             </v-layout>
             
-
           </v-flex>
         </v-layout>
 
@@ -77,25 +76,45 @@ export default {
   data () {
     return {
       detail_flag : false,
-      heart_flag : false,
-      comment_flag : false
+      heart_flag : [],
+      comment_flag : false,
+      propsItem : null,
+      propsComment : null
     }
   },
   components: {
         'DetailMenu': DetailMenu,
-        'FeedDetail' : FeedDetail
+        'FeedDetail' : FeedDetail,
     },
     methods: {
-      heart_click (index) {
-        var heart_image = document.getElementsByClassName("heart-image")[index-1];
-        
-        if(this.heart_flag == false) {
-          this.heart_flag = true;
-          heart_image.src = "../../static/home/heart2@2x.png";
-        } else {
-          this.heart_flag = false;
-          heart_image.src="../../static/home/heart@2x.png";
+      heart_click (index, board) {
+        var heart_image = document.getElementsByClassName("heart-image")[index];
+        var heart_cnt = document.getElementsByClassName("likecount")[index];
+      
+        var object = {
+          board_idx: board.board_idx,
+          token: this.token
         }
+        
+        if(this.heart_flag[index] == 0) {
+          this.heart_flag[index] = true;
+          heart_image.src = "../../static/home/heart2@2x.png";
+          this.$store.dispatch('changeLike', object)
+          heart_cnt.innerText = Number(heart_cnt.innerText)+1;
+        } else {
+          this.heart_flag[index] = false;
+          heart_image.src="../../static/home/heart@2x.png";
+          this.$store.dispatch('changeLike', object)
+          heart_cnt.innerText = Number(heart_cnt.innerText)-1;
+        }
+      },
+      convertDate(dateString){
+          var originDate = dateString
+          var strArray = originDate.split('-')
+          var month = strArray[0]
+          var date = strArray[1]
+          var convertDate = String(month) + "월 " + String(date) + "일"
+          return convertDate
       },
       weather_convert (weather_num) {
         switch (weather_num) {
@@ -122,16 +141,26 @@ export default {
           return '눈'
           break;
         }
+      },
+      clickedFeed (item) {
+        this.propsItem = item;
+        this.$store.dispatch('getFeedComment', item.board_idx);
+        this.propsComment = this.commentItems;
       }
     },
     computed: {
         ...mapGetters({
-            userInfos: 'userInfo'
+            userInfos: 'userInfo',
+            commentItems: 'feedCommentInfo',
+            token: 'tokenInfo'
         })
     },
     created() {
         if(this.userInfos === null) {
             this.$store.dispatch('getUserInfo')
+        }
+        for(var i = 0; i<this.userInfos.data.length; i++) {
+          this.heart_flag.push(this.userInfos.data[i].like_flag)
         }
     }
     
@@ -143,6 +172,11 @@ export default {
     text-align: start;
     padding: 0;
 }
+
+[v-cloak] {
+  display: none;
+}
+
 
 .user_image {
   width: 40px;
@@ -182,8 +216,12 @@ export default {
   padding: 0 20px;
 }
 
+.heart-container {
+  text-align: center;
+}
+
 .heart-image {
-  width: 110%;
+  width: 2.3vw;
   height: auto;
   cursor: pointer;
 }
@@ -205,6 +243,10 @@ export default {
 .all-comment {
   cursor: pointer;
   color : lightgray;
+}
+
+.detail_menu {
+  text-align: center;
 }
 
 </style>

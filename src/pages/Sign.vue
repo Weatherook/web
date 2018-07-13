@@ -118,7 +118,7 @@ export default {
             signUpPageFlag : 0,
             womanFlag : 0,
             manFlag : 0,
-            styleArray : ["빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"],
+            styleArray : ["빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "심플", "댄디", "로맨틱", "그 외"],
             styleFlagArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             type: 'number',
             number: 9999,

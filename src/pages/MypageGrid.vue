@@ -1,7 +1,7 @@
 <template>
-    <v-container grid-list-md > 
+    <v-container grid-list-md v-cloak> 
         
-        <v-layout row wrap>
+        <v-layout row wrap ml-5>
           <v-flex sm6 md6 lg6 m v-for = "item in userInfos.data" :key= "item">
             <img :src="item.board_img" class="post_image" @click.stop="showFeed = true" @click="clickedFeed(item)">
           </v-flex>
@@ -35,9 +35,7 @@ export default {
         })
     },
     created() {
-        if(this.userInfos === null) {
-            this.$store.dispatch('getUserInfo')
-        }
+        this.$store.dispatch('getUserInfo')
     },
     methods: {
         clickedFeed (item) {
@@ -51,11 +49,16 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
+
 .post_image {
     /* width : 380px; */
     width: 80%;
     height : 100%;
     cursor: pointer;
 }
+
 
 </style>

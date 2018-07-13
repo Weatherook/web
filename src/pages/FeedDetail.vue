@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card v-cloak>
         <v-container grid-list-xs fluid>
           <v-layout row wrap>
             <v-flex xs6 sm6 md6 lg6>
@@ -8,8 +8,8 @@
 
             <v-flex row wrap xs6 sm6 md6 lg6 pl-3 pt-3 pr-3>
                 <v-layout row>
-                    <span class="purple-text">7월 25일</span>
-                    <span class="purple-text">맑음</span>
+                    <span class="purple-text"> {{ convertDate() }}</span>
+                    <span class="purple-text"> {{ convertWeather() }} </span>
                     <span class="purple-text">{{ propsdata.board_temp_min }}/{{ propsdata.board_temp_max }}</span>
                     <v-spacer></v-spacer>
                     <v-flex xs1 sm1 md1 lg1 mr-4>
@@ -24,13 +24,13 @@
                   댓글 {{ propsdata.comment_cnt }}개
                 </v-flex>
 
-                <v-layout column wrap comments-container>
+                <v-layout column comments-container v-cloak>
                     <!-- 댓글 -->
-                    <v-layout row wrap xs12 sm12 md12 lg12 comment v-for="comment in propscommentdata" :key="comment" >
-                        <v-flex row xs2 sm2 md2 lg2 comment-user>
+                    <v-layout row xs12 sm12 md12 lg12 comment v-for="comment in propscommentdata" :key="comment" >
+                        <v-flex row xs3 sm3 md3 lg3 comment-user>
                             {{ comment.comment_id }}
                         </v-flex>
-                        <v-flex row wrap xs9 sm9 md9 lg9 ml-2>
+                        <v-flex row wrap xs8 sm8 md8 lg8 ml-1>
                             {{ comment.comment_desc }}
                         </v-flex>
                     </v-layout>
@@ -40,7 +40,7 @@
                     <img v-if="propsdata.user_img" :src="propsdata.user_img" alt="" class="user_image">
                     <img v-else src="../assets/top-profileface@2x.png" class="user_image">
                     <v-flex row wrap xs10 sm10 md10 lg10 pa-0>
-                        <v-text-field pa-0 ma-0 placeholder="댓글..." color="none"></v-text-field>
+                        <v-text-field pa-0 ma-0 placeholder="댓글..." color="none" v-model="input_comment" @keyup.enter="register_comment"></v-text-field>
                     </v-flex>
                 </v-layout>
 
@@ -62,17 +62,73 @@ export default {
     props: ['propsdata', 'propscommentdata'],
     computed: {
         ...mapGetters({
-            commentItems: 'feedCommentInfo'
+            commentItems: 'feedCommentInfo',
+            token: 'tokenInfo'
         })
+    },
+    methods: {
+        register_comment() {
+            var payload = {
+                board_idx: this.propsdata.board_idx,
+                comment_desc: this.input_comment 
+            }
+            var object = {
+                'token': this.token,
+                'payload': payload
+            }
+            this.$store.dispatch('registerComment', object);
+            this.input_comment='';
+            //다시 랜더링 
+        },
+        convertDate(){
+          var originDate = this.propsdata.board_date
+          var strArray = originDate.split('-')
+          var month = strArray[0]
+          var date = strArray[1]
+          var convertDate = String(month) + "월 " + String(date) + "일"
+          return convertDate
+      },
+       convertWeather(){
+        var weather = this.propsdata.board_weather
+        switch(weather){
+          case 0: 
+          return '맑음'
+          break;
+          case 1:
+          return '구름 조금'
+          break;
+          case 2:
+          return '구름 많음'
+          break;
+          case 3:
+          return '흐림'
+          break;
+          case 4:
+          return '비'
+          break;
+          case 5:
+          return '비/눈'
+          break;
+          case 6:
+          return '눈'
+          break;
+        }
+    }
     },
     created() {
 
-    }
-
+    },
 }
 </script>
 
 <style>
+* {
+    text-align: start;
+}
+
+[v-cloak] {
+  display: none;
+}
 
 .feed-image {
     width: 100%;

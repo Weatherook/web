@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app v-cloak>
         <v-container grid-list-lg fluid back-color>
         <v-layout column align-center>
             
@@ -32,21 +32,13 @@
         <v-layout row btns>
 
             <router-link to="/mypage/grid">
-                <img src="../assets/photo1@2x.png" alt="" class="view-icon grid">
+                <img src="../assets/photo1@2x.png" alt="" class="grid">
             </router-link>
 
             <router-link to="/mypage/list">
-                <img src="../assets/photo2@2x.png" alt="" class="view-icon list">
+                <img src="../assets/photo2@2x.png" alt="" class="list">
             </router-link>
 
-            <v-flex order-btn>
-                <button>인기순</button>
-            </v-flex>
-
-              <v-flex order-btn>
-                <button>최신순</button>
-            </v-flex>
-            
         </v-layout>
         <router-view></router-view>
        
@@ -61,7 +53,8 @@ import FollowingDetail from './FollowingDetail'
 export default {
     data() {
         return{
-            showFollowing: false
+            showFollowing: false,
+            otherId: ""
         }
     },
     components: {
@@ -74,10 +67,12 @@ export default {
         })
     },
     created() {
-        var other = {
-            other_id : ""
+        var object = {
+            other_id : this.otherId,
+            token: this.token
         }
-        this.$store.dispatch('getUserInfo',this.token, other)
+    
+        this.$store.dispatch('getUserInfo',object)
     }
 
 }
@@ -89,6 +84,10 @@ export default {
 <style scoped>
 * {
     text-align: center;
+}
+
+[v-cloak] {
+  display: none;
 }
 
 .back-color {
@@ -117,21 +116,21 @@ export default {
 
 }
 
-
-.view-icon {
-    width : 30px;
-    height: 30px;
-}
-
 .grid {
-    margin-left : 200px;
+    width : 75%;
+    margin-top: 10px;
+    height: auto;
 }
 
 .list {
     margin-left : 8px;
+    margin-top: 10px;
+    width : 70%;
+    height: auto;
 }
 
 .btns {
+    padding-left: 6%;
     padding-top: 20px;
     padding-bottom : 20px;
     border-top: solid 1px gray;

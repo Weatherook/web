@@ -55,5 +55,19 @@ export const Mutations = {
   getFeedCommentSuccess (state, payload) {
     console.log('get feed comment Success')
     state.feedComment = payload.data
+  },
+  registerCommentStart (state) {
+    console.log('register comment start')
+  },
+  registerCommentSuccess (state, payload) {
+    console.log('register Comment Success')
+    // state.feedComment = payload.data
+  },
+  likeSuccess (state, payload) {
+    console.log('like Success')
+  },
+  getAlarmSuccess (state, payload) {
+    console.log('get alarm Info Success')
+    state.alarm = payload.data
   }
 }

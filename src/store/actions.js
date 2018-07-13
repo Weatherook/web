@@ -21,11 +21,11 @@ export const Actions = {
       }
     })
   },
-  getUserInfo ({ commit }, token, other) {
+  getUserInfo ({ commit }, payload) {
     commit('userInfo')
-    axios.post('https://weatherook.cf/user/show', other, {
+    axios.post('https://weatherook.cf/user/show', {other_id: payload.other_id}, {
       headers: {
-        'token': token
+        'token': payload.token
       }
     }).then(response => {
       commit('userInfoSuccess', response.data)
@@ -91,6 +91,34 @@ export const Actions = {
     commit('getFeedCommentInfo')
     axios.get('https://weatherook.cf/board/comment/' + payload).then(response => {
       commit('getFeedCommentSuccess', response.data)
+    })
+  },
+  registerComment ({ commit }, payload) {
+    commit('registerCommentStart')
+    axios.post('https://weatherook.cf/board/comment', payload.payload, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('registerCommentSuccess', response.data)
+    })
+  },
+  changeLike ({ commit }, payload) {
+    axios.post('https://weatherook.cf/board/like', {board_idx: payload.board_idx}, {
+      headers: {
+        'token': payload.token
+      }
+    }).then(response => {
+      commit('likeSuccess', response.data)
+    })
+  },
+  getAlarmInfo ({ commit }, token) {
+    axios.get('https://weatherook.cf/user/news', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
+      commit('getAlarmSuccess', response.data)
     })
   }
 }

@@ -339,7 +339,8 @@ export default {
 
 <style scoped>
  * {
-     font-family: 'Noto Sans', sans-serif;
+     font-family: 'Noto Sans', sans-serif
+     ;
  }
 #homeApp{
     background: #f7f7f7;
