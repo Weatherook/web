@@ -43,4 +43,11 @@ export const AlarmGetters = {
   alarmInfo (state, getters) {
     return state.alarm
   }
+
+}
+
+export const FollowerGetters = {
+  allFollowers (state, getters) {
+    return state.user_followers
+  }
 }

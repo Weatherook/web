@@ -14,7 +14,7 @@
             <div class="num_text"> {{ userInfos.showBoardNumResult[0].board_num }} </div>
             게시물
           </v-flex>
-          <v-flex column>
+          <v-flex column following-container @click="showFollower = true">
             <div class="num_text"> {{ userInfos.showFollowerNumResult[0].follower }} </div>
             팔로워
           </v-flex>
@@ -28,6 +28,10 @@
             <v-dialog v-model="showFollowing" max-width="800" >
                <FollowingDetail></FollowingDetail>
             </v-dialog>    
+
+            <v-dialog v-model="showFollower" max-width="800" >
+                <FollowerDetail></FollowerDetail>
+            </v-dialog>
 
         <v-layout row btns>
 
@@ -50,16 +54,19 @@
 <script>
 import {mapGetters} from 'vuex'
 import FollowingDetail from './FollowingDetail'
+import FollowerDetail from './FollowerDetail'
 export default {
     data() {
         return{
             showFollowing: false,
+            showFollower: false,
             otherId: ""
         }
     },
     props: ['othersId'],
     components: {
-        'FollowingDetail': FollowingDetail
+        'FollowingDetail': FollowingDetail,
+        'FollowerDetail': FollowerDetail
     },
     computed: {
         ...mapGetters({
