@@ -3,12 +3,12 @@
         <v-container grid-list-xs fluid detail-con>
           <v-layout row wrap>
             <v-flex>
-               <v-carousel detail-carousel :cycle="false"> 
+               <v-carousel detail-carousel :cycle="false" hide-delimiters light> 
                     <v-carousel-item v-for="(pages,index) in followingPages" :key="index">
                         <v-layout row wrap following-container>
-                        <v-flex sm2 md2 lg2 column user-item v-for="(following, i) in followings.showFollowingingIDResult.slice(index*24, index*24+24)" :key="i">
+                        <v-flex sm2 md2 lg2 column user-item v-for="(following, i) in followings.showFollowingIDResult.slice(index*24, index*24+24)" :key="i">
                                 <img :src="following.user_img" class="user_img">
-                                <v-flex>{{following.user_id}}</v-flex>
+                                <v-flex following-id>{{following.user_id}}</v-flex>
                         </v-flex>
 
                         </v-layout>
@@ -35,8 +35,7 @@ export default {
             followings: 'allFollowings'
         }),
         followingPages (){
-            console.log(this.followings.showFollowingingIDResult)
-            var pages = Math.ceil(this.followings.showFollowingingIDResult.length / 24)
+            var pages = Math.ceil(this.followings.showFollowingIDResult.length / 24)
             console.log(pages)
             return pages
         }
@@ -57,7 +56,7 @@ export default {
     width: 80px;
     height: 80px;
     border-radius: 80px;
-    display: inline;
+    /* display: inline; */
 }
 
 .user-item {
@@ -68,10 +67,10 @@ export default {
 
 .following-container {
     text-align: center;
+    padding: 15px 15px;
 }
 
 .detail-con{
-    background: transparent;
     overflow: hidden;
     height: auto;
     padding: 0%;
@@ -79,6 +78,10 @@ export default {
 
 .detail-carousel{
     width: 50%;
-    background: transparent;
 }
+
+.following-id {
+    text-align: center;
+}
+
 </style>

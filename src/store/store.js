@@ -19,7 +19,8 @@ export const store = new Vuex.Store({
     token: '',
     nav: null,
     feedComment: [],
-    alarm: []
+    alarm: [],
+    other_mypage: null
   },
   mutations: Object.assign({}, Mutations),
   getters: Object.assign({}, mypageGetters, tokenGetters, navGetters, mypageInfoGetters, Getters, FeedCommentGetters, AlarmGetters),
