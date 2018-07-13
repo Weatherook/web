@@ -60,7 +60,7 @@
                </v-menu>    
             </v-flex>
 
-            <v-flex mt-1 ml-4>
+            <v-flex mt-2 ml-4>
               <v-menu offset-y v-if="$route.path == '/mypage/grid' || $route.path == '/mypage/list'|| $route.path == '/setting'">
                  <v-btn slot="activator" flat icon>
                   <img src="./assets/setting@2x.png" class="setting_image">

@@ -144,7 +144,11 @@ export default {
       },
       clickedFeed (item) {
         this.propsItem = item;
-        this.$store.dispatch('getFeedComment', item.board_idx);
+        var payload = {
+          board_idx: item.board_idx,
+          token: this.token
+        }
+        this.$store.dispatch('getFeedComment', payload);
         this.propsComment = this.commentItems;
       }
     },

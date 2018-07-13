@@ -89,7 +89,11 @@ export const Actions = {
 
   getFeedComment ({ commit }, payload) {
     commit('getFeedCommentInfo')
-    axios.get('https://weatherook.cf/board/comment/' + payload).then(response => {
+    axios.get('https://weatherook.cf/board/comment/' + payload.board_idx, {
+      headers: {
+        token: payload.token
+      }
+    }).then(response => {
       commit('getFeedCommentSuccess', response.data)
     })
   },
