@@ -213,7 +213,7 @@ export default {
 }
 
 .weather_image {
-  width: 100%;
+  width: 90%;
 }
 
 .divider_image {

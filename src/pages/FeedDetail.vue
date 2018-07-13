@@ -138,6 +138,10 @@ export default {
     text-align: start;
 } */
 
+a {
+    text-decoration: none;
+}
+
 [v-cloak] {
   display: none;
 }

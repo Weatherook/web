@@ -164,5 +164,15 @@ export const Actions = {
     }).then(response => {
       commit('getAlarmSuccess', response.data)
     })
+  },
+  getFollowers ({ commit }, token) {
+    axios.get('https://weatherook.cf/user/follower', {
+      headers: {
+        'token': token
+      }
+    }).then(response => {
+      commit('getFollowerSuccess', response.data)
+      console.log(response.data)
+    })
   }
 }
