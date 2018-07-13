@@ -31,7 +31,8 @@ export default {
     computed: {
         ...mapGetters({
             userInfos: 'userInfo',
-            commentItems: 'feedCommentInfo'
+            commentItems: 'feedCommentInfo',
+            token: 'tokenInfo'
         })
     },
     created() {
@@ -40,7 +41,11 @@ export default {
     methods: {
         clickedFeed (item) {
             this.propsItem = item;
-            this.$store.dispatch('getFeedComment', item.board_idx);
+            var payload = {
+                board_idx: item.board_idx,
+                token: this.token
+            }
+            this.$store.dispatch('getFeedComment', payload);
             this.propsComment = this.commentItems;
         }
     }
