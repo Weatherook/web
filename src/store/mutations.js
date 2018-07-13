@@ -65,12 +65,31 @@ export const Mutations = {
     console.log('modify Mypage Success')
     state.mypageModi = payload.data
   },
-  getAlarmSuccess (state, payload) {
-    console.log('get alarm Info Success')
-    state.alarm = payload.data
+  getFeedCommentInfo (state) {
+    console.log('get feed comment info start')
   },
   getFeedCommentSuccess (state, payload) {
     state.feedComment = payload.data
     console.log('get feed comment Success')
+  },
+  registerCommentStart (state, payload) {
+    console.log('register comment start')
+  },
+  registerCommentSuccess (state, payload) {
+    console.log('register Comment Success')
+    var comment = {
+      'comment_idx': payload.comment_idx,
+      'board_idx': payload.board_idx,
+      'comment_desc': payload.comment_desc,
+      'comment_id': state.mypage.showUserPageResult[0].user_id
+    }
+    state.feedComment.push(comment)
+  },
+  likeSuccess (state, payload) {
+    console.log('like Success')
+  },
+  getAlarmSuccess (state, payload) {
+    console.log('get alarm Info Success')
+    state.alarm = payload.data
   }
 }

@@ -3,12 +3,12 @@
         
         <v-layout row wrap ml-5>
           <v-flex sm6 md6 lg6 m v-for = "item in userInfos.data" :key= "item">
-            <img :src="item.board_img" class="post_image" @click.stop="showFeed = true" @click="clickedFeed(item)">
+            <img :src="item.board_img" class="post_image" @click="clickedFeed(item)">
           </v-flex>
         </v-layout>
         
         <v-dialog v-model="showFeed" max-width="1000" max-height="200">
-            <FeedDetail :propsdata="propsItem" :propscommentdata="propsComment"></FeedDetail>
+            <FeedDetail :propsdata="propsItem"></FeedDetail>
         </v-dialog>
 
     </v-container>
@@ -22,7 +22,7 @@ export default {
         return {
             showFeed : false,
             propsItem : null,
-            propsComment : null
+            other_id: ""
         }
     },
     components: {
@@ -36,7 +36,11 @@ export default {
         })
     },
     created() {
-        this.$store.dispatch('getUserInfo')
+        var object = {
+            other_id : this.otherId,
+            token: this.token
+        }
+        this.$store.dispatch('getUserInfo', object)
     },
     methods: {
         clickedFeed (item) {
@@ -45,8 +49,10 @@ export default {
                 board_idx: item.board_idx,
                 token: this.token
             }
+            
             this.$store.dispatch('getFeedComment', payload);
-            this.propsComment = this.commentItems;
+            this.showFeed = true;
+            
         }
     }
 }
