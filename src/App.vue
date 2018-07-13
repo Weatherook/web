@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <nav v-if="['/', '/setting','/mypage/grid', '/mypage/list', '/grid', '/list', '/feed/today/grid', '/feed/today/list', '/feed/following/grid', '/feed/following/list'].indexOf($route.path) > -1">
+    <nav v-if="['/setting','/mypage/grid', '/mypage/list', '/grid', '/list', '/feed/today/grid', '/feed/today/list', '/feed/following/grid', '/feed/following/list'].indexOf($route.path) > -1">
       <v-layout row wrap>
         <img src="./assets/topimage@3x.png" class="nav-back">  
         
