@@ -11,12 +11,12 @@
                     </v-flex>
                     
 
-                    <v-flex row id="inputIDCon" sm8 md8 lg8 mt-2>
+                    <v-flex row id="inputIDCon" sm8 md8 lg8 mt-4>
                         <span id="ID">아이디</span>
                         <input type="text" id="inputID" :value="modiInfos.showUserResult[0].user_id">
                     </v-flex>
 
-                    <v-flex id="inputIntroCon" sm8 md8 lg8 mt-3>
+                    <v-flex id="inputIntroCon" sm8 md8 lg8 mt-4>
                         <span id="Introduce">글</span>
                         <input type="text" id="inputIntro" v-model="user_desc">
                         <!-- v-model="user_desc" -->
@@ -28,7 +28,7 @@
                         <v-layout row>
                             <span class="subtitle-text">연령</span>
                             <img src="../assets/top_divideline.png" class="divide-line-image">
-                            <input type="text" id="inputAge" v-model="user_age">
+                            <input type="text" id="inputAge" v-model="user_age" class="input_height_weight">
                         </v-layout>
                     </v-flex>
 
@@ -56,7 +56,7 @@
                         <span class="subtitle-text">스타일</span>
                         <img src="../assets/top_divideline.png" class="divide-line-image"> 
                         
-                        <v-layout row wrap mt-2>
+                        <v-layout row wrap mt-2 class="styleContainer">
                             <v-flex row wrap xs3 sm3 md3 lg3 class="style-btn" v-for= "style in styleArray" :key="style" v-on:click="switchFlag">
                                 {{ style }}
                             </v-flex>
@@ -82,7 +82,7 @@ export default {
             file: null,
             user_stylelist: [],
             styleArray: [
-               "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "엘레강스", "댄디", "로맨틱", "그 외"
+               "빈티지", "스트릿", "클래식", "모던", "캐쥬얼", "유스", "심플", "댄디", "로맨틱", "그 외"
             ],
             styleFlagArray: [
                 { title: "빈티지", flag: false },
@@ -91,7 +91,7 @@ export default {
                 { title: "모던", flag: false },
                 { title: "캐쥬얼", flag: false },
                 { title: "유스", flag: false },
-                { title: "엘레강스", flag: false },
+                { title: "심플", flag: false },
                 { title: "댄디", flag: false },
                 { title: "로맨틱", flag: false },
                 { title: "그 외", flag: false },
@@ -196,7 +196,6 @@ export default {
     height: 100%;
     border: 1px solid #cbcbcb;
     background: white;
-    display:block;
     margin: 0 auto;
 }
 #profileface {
@@ -267,11 +266,9 @@ export default {
   color: #aaaaaa;
   background: #ffffff;
   border: solid #aaaaaa 0.8px;
-  margin-bottom: 1%;
   text-decoration: none;
   height: 35px;
-  margin-right: 5%;
-  margin-bottom: 5px;
+  margin-right: 3%;
   text-align:center;
   line-height: 30px;
 }
@@ -293,7 +290,8 @@ export default {
 }
 
 .input_height_weight {
-    width: 30px
+    width: 50px;
+    margin-left: 5px;
 }
 
 .complete-btn {
@@ -306,5 +304,8 @@ export default {
   border: solid #741DFF 1px;
   text-decoration: none;
   margin: 0 auto;
+}
+.styleContainer {
+    height: 200px;
 }
 </style>

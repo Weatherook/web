@@ -38,3 +38,9 @@ export const FeedCommentGetters = {
     return state.feedComment
   }
 }
+
+export const AlarmGetters = {
+  alarmInfo (state, getters) {
+    return state.alarm
+  }
+}
