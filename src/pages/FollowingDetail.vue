@@ -32,7 +32,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            followings: 'allFollowings'
+            followings: 'allFollowings',
+            token: 'tokenInfo'
         }),
         followingPages (){
             var pages = Math.ceil(this.followings.showFollowingIDResult.length / 24)
@@ -41,10 +42,7 @@ export default {
         }
     },
     created () {
-        // console.log(followings)
-        if(this.followings === null){
-            this.$store.dispatch('getFollwings')
-        }
+            this.$store.dispatch('getFollwings',this.token)
     }
 
 }
