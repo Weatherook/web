@@ -65,10 +65,10 @@ export const Actions = {
     })
   },
 
-  getFollwings ({ commit }, payload) {
-    axios.get('http://52.78.105.130:3004/user/following', {
+  getFollwings ({ commit }, token) {
+    axios.get('https://weatherook.cf/user/following', {
       headers: {
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkeCI6MSwiaWF0IjoxNTMxMDcxODY3LCJleHAiOjE1MzM2NjM4Njd9.-U9BxWAfoqO07psBi03FoMhXMVDWtfEY-OXwXAkvWJA'
+        'token': token
       }
     }).then(response => {
       commit('getFollowingsSuccess', response.data)
@@ -172,7 +172,6 @@ export const Actions = {
       }
     }).then(response => {
       commit('getFollowerSuccess', response.data)
-      console.log(response.data)
     })
   }
 }

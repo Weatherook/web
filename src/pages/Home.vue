@@ -112,7 +112,8 @@ export default {
     },
     computed : {
         ...mapGetters({
-            cards: 'todayRecommends'
+            cards: 'todayRecommends',
+            token: 'tokenInfo'
         }),
         cardPages (){
           // xl = 12, lg = 6, md = 4, sm = 3, xl = 2
@@ -162,7 +163,8 @@ export default {
         const object = {
             x: 60,
             y: 126,
-            date_type: 2
+            date_type: 2,
+            token: this.token
         }
         this.$store.dispatch('getTodayRec',object)
     
