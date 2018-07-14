@@ -16,7 +16,7 @@
                 </v-flex>
             </v-layout>
 
-            <v-flex row sm6 md6 lg6 offset-sm3 offset-md3>
+            <v-flex row sm6 md6 lg6 offset-sm2 offset-md2>
                 <template v-if="gridClicked===1">
                     <v-container grid-list-md > 
                         <v-layout row wrap>
