@@ -11,6 +11,7 @@ export const Mutations = {
   signInSuccess (state, payload) {
     state.token = payload.token
     console.log('sign In Finish')
+    console.log(payload.token)
   },
   getFollowingsSuccess (state, payload) {
     state.user_followings = payload.data
@@ -95,6 +96,5 @@ export const Mutations = {
   getFollowerSuccess (state, payload) {
     console.log('get followers Success')
     state.user_followers = payload.data
-    console.log(payload.data)
   }
 }
