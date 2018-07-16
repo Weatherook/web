@@ -11,7 +11,8 @@ export const Mutations = {
   signInSuccess (state, payload) {
     state.token = payload.token
     console.log('sign In Finish')
-    console.log(payload.token)
+    console.log(payload.token, '77777777777777777777777')
+    location.reload()
   },
   getFollowingsSuccess (state, payload) {
     state.user_followings = payload.data

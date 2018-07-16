@@ -575,6 +575,8 @@ export default {
 .feed-container {
   background-color: white;
   margin-bottom: 20px;
+      text-align: start;
+
 }
 
 .user-info {
