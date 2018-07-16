@@ -481,9 +481,11 @@ export default {
 </script>
 
 <style scoped>
+
 .style-feed-btn{
     width: 45px;
     height: 45px;
+
 }
 
 #grid-btn{
@@ -543,6 +545,8 @@ export default {
 .feed-container {
   background-color: white;
   margin-bottom: 20px;
+      text-align: start;
+
 }
 
 .user-info {

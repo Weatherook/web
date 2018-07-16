@@ -8,7 +8,7 @@ export const Actions = {
       commit('signUpSuccess')
       console.log(response)
       if (response.status === 201) {
-        router.push('/feed/today/grid')
+        location.reload('/')
         console.log('서버연결?!?!?!')
       }
     })

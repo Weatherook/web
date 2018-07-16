@@ -88,8 +88,8 @@
                </v-menu>
 
               <router-link v-else to="/mypage/grid">
-                <img v-if="navInfos.user_img === null" src="./assets/top-profileface@2x.png" class="profile_image">
-                <img v-else :src="navInfos.user_img" class="profile_image">
+                <img v-if="this.$store.state.nav.user_img == null" src="./assets/top-profileface@2x.png" class="profile_image">
+                <img v-else :src="this.$store.state.nav.user_img" class="profile_image">
               </router-link>
             </v-flex>
 
@@ -131,11 +131,13 @@ export default {
     ...mapGetters({
         navInfos: 'navInfo',
         token: 'tokenInfo',
-        alarms: 'alarmInfo'
+        alarms: 'alarmInfo',
     })
   },
     created() {
-    this.$store.dispatch('getNavInfo', this.token)
+    this.$store.dispatch('getNavInfo', this.$store.state.token)
+
+    console.log(this.$store.state.token, 'nav token 777777777777')
     
     var d = new Date();
     this.mm = d.getMonth() +1;
@@ -143,7 +145,7 @@ export default {
     this.day = d.getDay();
     this.day = this.week[this.day] + "요일";
 
-    this.$store.dispatch('getAlarmInfo', this.token)
+    this.$store.dispatch('getAlarmInfo', this.$store.state.token)
   },
   methods: {
     click_bell() {
